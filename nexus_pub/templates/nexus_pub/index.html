@@ -1,0 +1,163 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Publication</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .navbar-collapse {
+            flex-grow: 0;
+        }
+
+        .description {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-xl navbar-light mb-4 py-3 border-bottom align-items-center">
+        <div class="container">
+            <a class="navbar-brand fw-bolder fs-4" href="{% url 'index' %}">Nexus Publication</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    {% for category in categories %}
+                    <li class="nav-item">
+                        <a class="nav-link text-capitalize" href="{% url 'index' %}?search={{ category }}">{{ category }}</a>
+                    </li>
+                    {% endfor %}
+                </ul> -->
+                <form action="/" method="GET">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </nav>
+
+
+    <div class="content">
+        {% if success %}
+        <div class="container mb--md-4">
+            {% if headline %}
+            <div id="newsCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for news in headline %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <h1 class="fw-bolder fs-1 text-center text-capitalize mb-5">{% if search %} {{ search }} {% else %} Top News {% endif %}</h1>
+                        <div class="card mb-5 border-0">
+                            <div class="row g-0">
+                                {% if news.image %}
+                                <div class="col-md-5">
+                                    <img src="{{ news.image }}" class="img-fluid rounded w-100 h-100" style="object-fit: cover;" alt="News Image" loading="lazy">
+                                </div>
+                                {% endif %}
+                                <div class="col-md-7 px-lg-5 py-lg-3">
+                                    <div class="card-body">
+                                        <p class="card-text text-end"><small class="text-muted">{{ news.publishedat }}</small></p>
+                                        <h2 class="card-title fw-bolder fs-1">{{ news.title }}</h2>
+                                        <p class="card-text">{{ news.description }}</p>
+                                        <a href="{{ news.url }}" class="btn btn-primary btn-sm float-right">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <hr>
+            {% else %}
+            <h4 class="mt-4 text-center fw-bold"> No news found. </h4>
+            {% endif %}
+        </div>
+
+        
+
+        <div class="container">
+            <div class="row">
+                {% if data %}
+                <h4 class="fw-bold text-md-center my-3">More News {% if search %}About <span class="text-capitalize">{{ search }}</span>{% endif %}</h4>
+                {% for news in data %}
+                <div class="col-lg-4 col-sm-6 card mb-5 border-0">
+                    <div class="pe-md-4">
+                        {% if news.image %}
+                        <div class="ratio ratio-16x9">
+                            <img src="{{ news.image }}" class="img-fluid rounded" style="object-fit: cover;" alt="News Image" loading="lazy">
+                        </div>
+                        {% endif %}
+                        <div class="">
+                            <div class="">
+                                <small class="text-muted text-end">{{ news.publishedat }}</small>
+                                <h2 class="card-title fw-bolder fs-5">{{ news.title }}</h2>
+                                <p class="card-text description">{{ news.description }}</p>
+                                <a href="{{ news.url }}" class="btn btn-primary btn-sm float-right">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                {% endif %}
+            
+                {% for page in page_obj.paginator.page_range %}
+                {% if page_obj.number == page %}
+                <a href="?page={{ page }}" class="page-link active">{{ page }}</a>
+                {% else %}
+                <a href="?page={{ page }}" class="page-link">{{ page }}</a>
+                {% endif %}
+                {% endfor %}
+            
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <h4 class="mt-4 text-center fw-bold"> Request Failed. </h4>
+        {% endif %}
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
