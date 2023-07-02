@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class User(models.Model):
     name = models.CharField(max_length=100)
@@ -7,16 +8,31 @@ class User(models.Model):
 
 class Staff(models.Model):
     name = models.CharField(max_length=100)
-    picture = models.ImageField(upload_to='staff_pictures')
-    cover = models.ImageField(upload_to='staff_covers')
+    picture = models.URLField(default="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+    cover = models.URLField(default="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
     description = models.TextField()
     email = models.EmailField()
+    
+    def __str__(self):
+        return self.name
 
-class News(models.Model):
+class Category(models.Model):
+    category = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.category
+
+class Article(models.Model):
     title = models.CharField(max_length=200)
-    category = models.CharField(max_length=100)
-    author = models.CharField(max_length=100)
+    description = models.CharField(blank=True, max_length=500)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="article_category")
+    author = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name="article_author")
     date_published = models.DateField()
+    content = models.TextField(default='')
+    image = models.URLField(default=settings.DEFAULT_IMAGE)
+
+    def __str__(self):
+        return self.title
 
 class Comment(models.Model):
     content = models.TextField()

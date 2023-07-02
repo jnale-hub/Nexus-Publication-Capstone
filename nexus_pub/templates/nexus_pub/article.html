@@ -1,0 +1,21 @@
+{% extends "nexus_pub/layout.html" %}
+
+{% block title %} {{ article.category }} | {% endblock %}
+{% block body %}
+<article class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h1 class="fs-1 fw-bold mt-3">{{ article.title }}</h1>
+            <p class="lead text-muted">{{ article.description }}</p>
+            <p>
+                <span class="text-uppercase">By {{ article.author }}</span><br>
+                <span class="small">{{ article.date_published }}</span>
+            </p>
+            {% if article.image %}
+            <img src="{{ article.image }}" alt="{{ article.title }}" class="img-fluid mb-4 w-100">
+            {% endif %}
+            <div class="mt-4">{{ article.content|linebreaksbr|safe }}</div>
+        </div>
+    </div>
+</article>
+{% endblock %}
