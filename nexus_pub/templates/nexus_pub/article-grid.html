@@ -1,0 +1,45 @@
+<article class="container">
+    <div class="row">
+        {% if articles %}
+        <h2 class="fw-bold text-md-center my-4">
+            {% if category %}
+                <span class="fs-1">{{ category }}</span>
+            {% elif staff %}
+                <span class="fs-3">Articles from {{ staff.name }}</span>
+            {% elif search %}
+                <span class="fs-3 text-capitalize">Articles About {{ search }}</span>
+            {% else %}
+                <span class="fs-4">More Articles</span>
+            {% endif %}
+        </h2>
+        
+
+        {% for article in articles %}
+        <div class="col-lg-4 col-sm-6 card mb-5 border-0">
+            <div class="pe-md-4">
+                {% if article.image %}
+                <a href="{% url 'view_article' id=article.id %}">
+                    <div class="ratio ratio-16x9">
+                        <img src="{{ article.image }}" class="img-fluid rounded" style="object-fit: cover;" alt="article Image" loading="lazy">
+                    </div>
+                </a>
+                {% endif %}
+                <small class="text-muted text-end">{{ article.date_published }} · 
+                    <a href="{% url 'view_staff' name=article.author %}" class="text-decoration-none text-reset">{{ article.author }}</a> · 
+                    <a href="{% url 'view_category' category=article.category %}" class="text-decoration-none text-reset">{{ article.category }}</a>
+                </small>
+                <a href="{% url 'view_article' id=article.id %}" class="text-decoration-none text-reset">
+                    <h2 class="card-title fw-bolder fs-5">{{ article.title }}</h2>
+                    <p class="card-text description">{{ article.description }}</p>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        {% elif category %}
+        <h5 class="mt-4 text-center fw-bold"> No available articles. </h5>
+        {% elif search %}
+        <h5 class="mt-4 text-center fw-bold"> No available articles about <span class="text-capitalize">{{ search }}.</span></h5>
+        {% endif %}
+    </div>
+
+</article>

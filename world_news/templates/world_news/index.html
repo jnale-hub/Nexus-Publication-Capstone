@@ -37,11 +37,11 @@
                     </li>
                     {% for category in categories %}
                     <li class="nav-item">
-                        <a class="nav-link text-capitalize" href="{% url 'index' %}?search={{ category }}">{{ category }}</a>
+                        <a class="nav-link text-capitalize" href="{% url 'world_news' %}?search={{ category }}">{{ category }}</a>
                     </li>
                     {% endfor %}
                 </ul>
-                <form action="{% url 'index' %}" method="GET">
+                <form action="{% url 'world_news' %}" method="GET">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder="Search">
                         <div class="input-group-append">

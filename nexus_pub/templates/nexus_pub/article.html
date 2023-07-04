@@ -8,13 +8,13 @@
             <h1 class="fs-1 fw-bold mt-3">{{ article.title }}</h1>
             <p class="lead text-muted">{{ article.description }}</p>
             <p>
-                <span class="text-uppercase">By {{ article.author }}</span><br>
+                <a href="{% url 'view_staff' name=article.author %}" class="text-uppercase text-reset">By {{ article.author }}</a><br>
                 <span class="small">{{ article.date_published }}</span>
             </p>
             {% if article.image %}
             <img src="{{ article.image }}" alt="{{ article.title }}" class="img-fluid mb-4 w-100">
             {% endif %}
-            <div class="mt-4">{{ article.content|linebreaksbr|safe }}</div>
+            <div class="my-4 fs-5">{{ article.content|linebreaksbr|safe }}</div>
         </div>
     </div>
 </article>

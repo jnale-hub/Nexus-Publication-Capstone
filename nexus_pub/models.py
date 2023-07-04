@@ -8,8 +8,8 @@ class User(models.Model):
 
 class Staff(models.Model):
     name = models.CharField(max_length=100)
-    picture = models.URLField(default="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-    cover = models.URLField(default="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+    position = models.CharField(blank=True, max_length=100)
+    picture = models.URLField(default=settings.DEFAULT_IMAGE)
     description = models.TextField()
     email = models.EmailField()
     

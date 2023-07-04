@@ -1,14 +1,16 @@
 {% extends "nexus_pub/layout.html" %}
 
+{% block title %} {% if category %} {{ category }} | {% endif %} {% endblock %}
+
 {% block body %}
 
-<article class="container mb--md-4">
+<article class="container md-4">
     {% if headlines %}
     <div id="articleCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             {% for article in headlines %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <h1 class="fw-bolder fs-1 text-center text-capitalize mb-5">{% if search %} {{ search }} {% elif article.category %} {{ article.category }} {% else %} Article {% endif %}</h1>
+                <h1 class="fw-bold fs-1 text-center text-uppercase mb-4">{% if search %} {{ search }} {% elif article.category %} {{ article.category }} {% else %} Article {% endif %}</h1>
                 <div class="card mb-5 border-0">
                     <div class="row g-0">
                         {% if article.image %}
@@ -42,29 +44,6 @@
     {% endif %}
 </article>
 
-<article class="container">
-    <div class="row">
-        {% if articles %}
-        <h4 class="fw-bold text-md-center my-3">More Articles {% if search %}About <span class="text-capitalize">{{ search }}</span>{% endif %}</h4>
-        {% for article in articles %}
-        <div class="col-lg-4 col-sm-6 card mb-5 border-0">
-            <div class="pe-md-4">
-                <a href="{% url 'view_article' id=article.id %}" class="text-decoration-none text-reset">
-                {% if article.image %}
-                <div class="ratio ratio-16x9">
-                    <img src="{{ article.image }}" class="img-fluid rounded" style="object-fit: cover;" alt="article Image" loading="lazy">
-                </div>
-                {% endif %}
-                <small class="text-muted text-end">{{ article.date_published }} · {{ article.author }} · {{ article.category }}</small>
-                <h2 class="card-title fw-bolder fs-5">{{ article.title }}</h2>
-                <p class="card-text description">{{ article.description }}</p>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-        {% endif %}
-    </div>
-
-</article>
+{% include "nexus_pub/article-grid.html" %}
 
 {% endblock %}
