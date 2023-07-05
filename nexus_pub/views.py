@@ -71,17 +71,53 @@ def view_staff(request, name):
     }
     return render(request, 'nexus_pub/staff.html', context)
 
+
 def search(request):
     query = request.GET.get('q')
-    articles = Article.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(description__icontains=query) | Q(author__name__icontains=query))
-
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    
+    articles = Article.objects.all()
+    date_range = ''
+    
+    if query:
+        articles = articles.filter(
+            Q(title__icontains=query) | Q(content__icontains=query) | Q(description__icontains=query) | Q(author__name__icontains=query)
+        )
+    
+    if start_date and end_date:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        
+        # Check if the start date is before or equal to the end date
+        if start_date <= end_date:
+            articles = articles.filter(date_published__range=[start_date, end_date])
+            date_range = f"from {start_date.strftime('%B %d, %Y')} to {end_date.strftime('%B %d, %Y')}"
+        else:
+            # Swap the dates if the start date is after the end date
+            start_date, end_date = end_date, start_date
+            articles = articles.filter(date_published__range=[start_date, end_date])
+            date_range = f"from {start_date.strftime('%B %d, %Y')} to {end_date.strftime('%B %d, %Y')}"
+    
+    elif start_date:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        articles = articles.filter(date_published__gte=start_date)
+        date_range = f"from {start_date.strftime('%B %d, %Y')}"
+    
+    elif end_date:
+        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        articles = articles.filter(date_published__lte=end_date)
+        date_range = f"until {end_date.strftime('%B %d, %Y')}"
+    
     context = {
         "articles": articles,
-        'search': query,
-        'categories': categories,
+        "date_range": date_range,
+        "search": query,
+        "categories": categories,
     }
-
+    
     return render(request, 'nexus_pub/index.html', context)
+
 
 def login_view(request):
     if request.method == "POST":

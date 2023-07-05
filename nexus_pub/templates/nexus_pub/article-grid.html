@@ -8,6 +8,8 @@
                 <span class="fs-3">Articles from {{ staff.name }}</span>
             {% elif search %}
                 <span class="fs-3 text-capitalize">Articles About {{ search }}</span>
+            {% elif date_range %}
+                <span class="fs-3">Articles {{ date_range }}</span>
             {% else %}
                 <span class="fs-4">More Articles</span>
             {% endif %}
@@ -39,6 +41,8 @@
         <h5 class="mt-4 text-center fw-bold"> No available articles. </h5>
         {% elif search %}
         <h5 class="mt-4 text-center fw-bold"> No available articles about <span class="text-capitalize">{{ search }}.</span></h5>
+        {% elif date_range %}
+        <h5 class="mt-4 text-center fw-bold"> No available articles from {{ date_range }}.</h5>
         {% endif %}
     </div>
 
