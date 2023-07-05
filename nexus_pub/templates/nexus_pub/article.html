@@ -7,10 +7,17 @@
         <div class="col-lg-8 offset-lg-2">
             <h1 class="fs-1 fw-bold mt-3">{{ article.title }}</h1>
             <p class="lead text-muted">{{ article.description }}</p>
-            <p>
-                <a href="{% url 'view_staff' name=article.author %}" class="text-uppercase text-reset">By {{ article.author }}</a><br>
-                <span class="small">{{ article.date_published }}</span>
-            </p>
+            <div class="d-flex justify-content-between mb-3">
+                <a href="{% url 'view_staff' name=article.author %}" class="d-flex text-reset">
+                    {% if article.author.picture %}
+                    <div class="ratio ratio-1x1 me-2" style="width: 40px; height: 40px;">
+                        <img src="{{ article.author.picture }}" alt="{{ article.author }}" class="img-fluid rounded-circle" style="object-fit: cover;">
+                    </div>                
+                    {% endif %}
+                    <p class="text-uppercase my-auto fs-6">By {{ article.author }}</p>
+                </a>            
+                <p class="fs-6 my-auto">{{ article.date_published }}</p>
+            </div>
             {% if article.image %}
             <img src="{{ article.image }}" alt="{{ article.title }}" class="img-fluid mb-4 w-100">
             {% endif %}
