@@ -5,6 +5,9 @@
 {% block body %}
 
 <article class="container md-4">
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
     {% if headlines %}
     <div id="articleCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">

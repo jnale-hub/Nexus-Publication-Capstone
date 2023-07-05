@@ -85,6 +85,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "nexus_pub.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

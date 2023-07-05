@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.conf import settings
 from datetime import datetime
 from django.http import HttpResponse
-import requests
 
 def index(request):
     # Get the search query parameter

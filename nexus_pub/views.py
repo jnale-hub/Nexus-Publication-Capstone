@@ -1,15 +1,17 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from datetime import datetime
 from django.http import HttpResponse
-import requests
 from django.core.paginator import Paginator
-from django.db.models import Max, Q
+from django.db.models import Max, Q, OuterRef, Subquery
 
 from .models import *
-
-
-from django.db.models import OuterRef, Subquery
 
 categories = Category.objects.all()
 
@@ -81,3 +83,50 @@ def search(request):
 
     return render(request, 'nexus_pub/index.html', context)
 
+def login_view(request):
+    if request.method == "POST":
+
+        # Attempt to sign user in
+        name = request.POST["name"]
+        password = request.POST["password"]
+        user = authenticate(request, username=name, password=password)
+
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "nexus_pub/index.html", {
+                "message": "Invalid email and/or password."
+            })
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("index"))
+
+
+def register(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        email = request.POST["email"]
+
+        # Ensure password matches confirmation
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
+        if password != confirmation:
+            return render(request, "nexus_pub/index.html", {
+                "message": "Passwords must match."
+            })
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(name, email, password)
+            user.save()
+        except IntegrityError as e:
+            print(e)
+            return render(request, "nexus_pub/index.html", {
+                "message": "Name already taken."
+            })
+        login(request, user)
+        return HttpResponseRedirect(reverse("index"))

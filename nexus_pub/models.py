@@ -1,10 +1,9 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
 
-class User(models.Model):
-    name = models.CharField(max_length=100)
-    picture = models.ImageField(upload_to='user_pictures')
-    points = models.IntegerField(default=0)
+class User(AbstractUser):
+    pass
 
 class Staff(models.Model):
     name = models.CharField(max_length=100)
@@ -42,4 +41,3 @@ class Comment(models.Model):
 class Game(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    image = models.ImageField(upload_to='game_images')

@@ -33,6 +33,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'world_news' %}">World News</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Games</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">{{ user.username }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    </li>
+                    {% endif %}
                     {% for category in categories %}
                     <li class="nav-item d-lg-none">
                         <a class="nav-link text-capitalize" href="{% url 'view_category' category=category %}">{{ category }}</a>
@@ -62,16 +80,6 @@
         </div>
     </div>
     
-    
-    
-    
-    
-    
-    
-    
-    
-
-
     <main class="content">
         {% block body %}
 
@@ -99,6 +107,9 @@
         </a>
         {% endif %}
     </div>
+
+    {% include 'nexus_pub/login.html' %}
+    {% include 'nexus_pub/register.html' %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
