@@ -40,12 +40,14 @@ def index(request):
 
 
 def view_article(request, id):
-    articles = Article.objects.get(pk=id)
+    article = get_object_or_404(Article, pk=id)
+    comments = Comment.objects.filter(article=article)
 
     return render(request, 'nexus_pub/article.html', {
-        "article": articles,
+        'article': article,
+        'comments': comments,
     })
-
+    
 def view_category(request, category):
     # Get the category object
     category_obj = get_object_or_404(Category, category=category)
@@ -117,6 +119,21 @@ def search(request):
     }
     
     return render(request, 'nexus_pub/index.html', context)
+
+def add_comment(request, id):
+    article = get_object_or_404(Article, pk=id)
+
+    if request.method == 'POST':
+        new_comment = Comment(
+            user=request.user,
+            article=article,
+            content=request.POST['comment_content'],
+            date=datetime.now()
+        )
+        new_comment.save()
+        return redirect('view_article', id=id)
+
+    return redirect('view_article', id=id)
 
 
 def login_view(request):

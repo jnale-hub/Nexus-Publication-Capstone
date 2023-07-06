@@ -1,6 +1,7 @@
 {% extends "nexus_pub/layout.html" %}
 
 {% block title %} {{ article.category }} | {% endblock %}
+
 {% block body %}
 <article class="container">
     <div class="row">
@@ -22,6 +23,33 @@
             <img src="{{ article.image }}" alt="{{ article.title }}" class="img-fluid mb-4 w-100">
             {% endif %}
             <div class="my-4 fs-5">{{ article.content|linebreaksbr|safe }}</div>
+
+            <hr>
+
+            <h2 class="fw-bold my-4">Leave a Comment</h2>
+            <form method="POST" action="{% url 'add_comment' id=article.id %}" class="mb-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="comment_content" class="form-label">Comment</label>
+                    <textarea class="form-control" id="comment_content" name="comment_content" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </form>
+
+            <h2 class="fw-bold my-4">Comments</h2>
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ comment.user }}</h5>
+                            <p class="card-text">{{ comment.content }}</p>
+                            <p class="card-text"><small class="text-muted">{{ comment.date }}</small></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No comments yet.</p>
+            {% endif %}
         </div>
     </div>
 </article>
