@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from datetime import datetime
 from django.http import HttpResponse
@@ -120,6 +120,7 @@ def search(request):
     
     return render(request, 'nexus_pub/index.html', context)
 
+@login_required
 def add_comment(request, id):
     article = get_object_or_404(Article, pk=id)
 
@@ -138,20 +139,23 @@ def add_comment(request, id):
 
 def login_view(request):
     if request.method == "POST":
+        name = request.POST.get("name")
+        password = request.POST.get("password")
+        article_id = request.POST.get("article_id")
 
-        # Attempt to sign user in
-        name = request.POST["name"]
-        password = request.POST["password"]
         user = authenticate(request, username=name, password=password)
-
-        # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            if article_id:
+                article_url = reverse('view_article', kwargs={'id': article_id})
+                return redirect(f"{article_url}#toggle-comments")
+            return redirect("index")
         else:
             return render(request, "nexus_pub/index.html", {
-                "message": "Invalid email and/or password."
+                "message": "Invalid username and/or password."
             })
+    else:
+        return render(request, "nexus_pub/index.html")
 
 
 def logout_view(request):
@@ -163,6 +167,8 @@ def register(request):
     if request.method == "POST":
         name = request.POST["name"]
         email = request.POST["email"]
+
+        article_id = request.POST["article_id"]
 
         # Ensure password matches confirmation
         password = request.POST["password"]
@@ -182,4 +188,7 @@ def register(request):
                 "message": "Name already taken."
             })
         login(request, user)
+        if article_id:
+            article_url = reverse('view_article', kwargs={'id': article_id})
+            return redirect(f"{article_url}#toggle-comments")
         return HttpResponseRedirect(reverse("index"))

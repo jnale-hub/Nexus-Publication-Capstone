@@ -12,11 +12,12 @@
                 <a href="{% url 'view_staff' name=article.author %}" class="d-flex text-reset">
                     {% if article.author.picture %}
                     <div class="ratio ratio-1x1 me-2" style="width: 40px; height: 40px;">
-                        <img src="{{ article.author.picture }}" alt="{{ article.author }}" class="img-fluid rounded-circle" style="object-fit: cover;">
-                    </div>                
+                        <img src="{{ article.author.picture }}" alt="{{ article.author }}"
+                            class="img-fluid rounded-circle" style="object-fit: cover;">
+                    </div>
                     {% endif %}
                     <p class="text-uppercase my-auto fs-6">By {{ article.author }}</p>
-                </a>            
+                </a>
                 <p class="fs-6 my-auto">{{ article.date_published }}</p>
             </div>
             {% if article.image %}
@@ -25,31 +26,55 @@
             <div class="my-4 fs-5">{{ article.content|linebreaksbr|safe }}</div>
 
             <hr>
+            {% if user.is_authenticated %}
 
-            <h2 class="fw-bold my-4">Leave a Comment</h2>
-            <form method="POST" action="{% url 'add_comment' id=article.id %}" class="mb-4">
+            <a id="toggle-comments" class="mb-3">View Comments</a>
+            <div id="comments-section" style="display: none;">
+                <h4 class="fw-bold my-2">Comments</h4>
+                {% if comments %}
+                {% for comment in comments %}
+                <div class="card my-1">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ comment.user }}</h5>
+                        <p class="card-text">{{ comment.content|linebreaksbr|safe }}</p>
+                        <p class="card-text"><small class="text-muted">{{ comment.date }}</small></p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No comments yet.</p>
+                {% endif %}
+            </div>
+
+            <h4 class="fw-bold my-2">Leave a Comment</h4>
+            <form method="POST" action="{% url 'add_comment' id=article.id %}" class="mb-2">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="comment_content" class="form-label">Comment</label>
-                    <textarea class="form-control" id="comment_content" name="comment_content" rows="3" required></textarea>
+                    <textarea class="form-control" id="comment_content" name="comment_content" rows="3"
+                        required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit Comment</button>
             </form>
 
-            <h2 class="fw-bold my-4">Comments</h2>
-            {% if comments %}
-                {% for comment in comments %}
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ comment.user }}</h5>
-                            <p class="card-text">{{ comment.content }}</p>
-                            <p class="card-text"><small class="text-muted">{{ comment.date }}</small></p>
-                        </div>
-                    </div>
-                {% endfor %}
             {% else %}
-                <p>No comments yet.</p>
+
+            <a data-bs-toggle="modal" data-bs-target="#loginModal" class="py-3">Log in to View Comments.</a>
+
             {% endif %}
+
+            <script>
+                document.getElementById('toggle-comments').addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var commentsSection = document.getElementById('comments-section');
+                    if (commentsSection.style.display === 'none') {
+                        commentsSection.style.display = 'block';
+                        this.textContent = 'Hide Comments';
+                    } else {
+                        commentsSection.style.display = 'none';
+                        this.textContent = 'View Comments';
+                    }
+                });
+            </script>
         </div>
     </div>
 </article>
