@@ -3,7 +3,10 @@ from django.db import models
 from django.conf import settings
 
 class User(AbstractUser):
-    pass
+    name = models.CharField(blank=True, max_length=100)
+    picture = models.URLField(default=settings.DEFAULT_IMAGE)
+    def __str__(self):
+        return self.name
 
 class Staff(models.Model):
     name = models.CharField(max_length=100)

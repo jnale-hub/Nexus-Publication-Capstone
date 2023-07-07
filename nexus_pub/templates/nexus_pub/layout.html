@@ -7,10 +7,13 @@
     <title>{% block title %}{% endblock %} Nexus Publication</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <style>
         .navbar-collapse {
             flex-grow: 0;
         }
+
         .description {
             display: -webkit-box;
             -webkit-line-clamp: 3;
@@ -29,7 +32,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav justify-content-between">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'world_news' %}">World News</a>
                     </li>
@@ -37,12 +43,84 @@
                         <a class="nav-link" href="#">Games</a>
                     </li>
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">{{ user.username }}</a>
+                    <li class="nav-item dropdown d-none d-lg-block">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="ratio ratio-1x1 ms-2" style="width: 35px; height: 35px;">
+                                <img src="{{ user.picture }}" alt="{{ user.name }}" class="img-fluid rounded-circle"
+                                    style="object-fit: cover;">
+                            </div>
+                            <a class="nav-link dropdown-toggle" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-start dropdown-menu-arrow profile py-0">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                        <i class="bi bi-star-fill pe-2"></i>
+                                        <span>Saved Articles</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider m-0">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" data-bs-toggle="modal"
+                                        data-bs-target="#profileModal">
+                                        <i class="bi bi-person pe-2"></i>
+                                        <span>My Profile</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider m-0">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                                        <i class="bi bi-gear pe-2"></i>
+                                        <span>Account Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider m-0">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center py-2" href="{% url 'logout' %}">
+                                        <i class="bi bi-box-arrow-right pe-2"></i>
+                                        <span>Log Out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link collapsed" data-bs-target="#profile-nav" data-bs-toggle="collapse" href="#">
+                            <span>{{ user.name }}</span><i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="profile-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                            <li>
+                                <a class="nav-link" href="{% url 'index' %}">
+                                    <span>Saved Article</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                    <span>My Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{% url 'index' %}">
+                                    <span>Account Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{% url 'logout' %}">
+                                    <span>Log Out</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
@@ -51,11 +129,20 @@
                         <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
                     </li>
                     {% endif %}
-                    {% for category in categories %}
                     <li class="nav-item d-lg-none">
-                        <a class="nav-link text-capitalize" href="{% url 'view_category' category=category %}">{{ category }}</a>
+                        <a class="nav-link collapsed" data-bs-target="#category-nav" data-bs-toggle="collapse" href="#">
+                            <span>Categories</span><i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="category-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                            {% for category in categories %}
+                            <li>
+                                <a class="nav-link" href="{% url 'view_category' category=category %}">
+                                    <span>{{ category }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </li>
-                    {% endfor %}
                 </ul>
                 <form action="{% url 'search' %}" method="GET">
                     <div class="input-group">
@@ -65,7 +152,8 @@
                         </div>
                     </div>
                 </form>
-                <button class="btn btn-primary mx-xl-3 my-2" type="button" data-bs-toggle="modal" data-bs-target="#dateFilterModal">
+                <button class="btn btn-primary mx-xl-3 my-2" type="button" data-bs-toggle="modal"
+                    data-bs-target="#dateFilterModal">
                     Filter Date
                 </button>
             </div>
@@ -76,7 +164,8 @@
         <div class="overflow-auto scrollbar scrollbar-light" style="white-space: nowrap;">
             <div class="d-flex justify-content-center">
                 {% for category in categories %}
-                <a class="nav-link text-reset text-uppercase px-2" href="{% url 'view_category' category=category %}"> {{ category }}
+                <a class="nav-link text-reset text-uppercase px-2" href="{% url 'view_category' category=category %}">
+                    {{ category }}
                 </a>
                 {% endfor %}
             </div>
@@ -84,8 +173,8 @@
     </div>
 
     <div class="container">
-        
-        <div class="modal fade" id="dateFilterModal" tabindex="-1" aria-labelledby="dateFilterModalLabel" aria-hidden="true">
+        <div class="modal fade" id="dateFilterModal" tabindex="-1" aria-labelledby="dateFilterModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -114,9 +203,32 @@
         </div>
     </div>
 
-    
-    
-    
+
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">My Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{ user.picture }}" alt="Profile Picture" class="rounded-circle mb-3"
+                            style="width: 80px; height: 80px; object-fit: cover;">
+                        <h4>{{ user.name }}</h4>
+                        <p class="text-muted">{{ user.username }}</p>
+                        <p>Email: {{ user.email }}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary">Edit Profile</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main class="content">
         {% block body %}
 
@@ -129,7 +241,7 @@
             <span aria-hidden="true">&laquo;</span>
         </a>
         {% endif %}
-    
+
         {% for page in page_obj.paginator.page_range %}
         {% if page_obj.number == page %}
         <a href="?page={{ page }}" class="page-link active">{{ page }}</a>
@@ -137,7 +249,7 @@
         <a href="?page={{ page }}" class="page-link">{{ page }}</a>
         {% endif %}
         {% endfor %}
-    
+
         {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>

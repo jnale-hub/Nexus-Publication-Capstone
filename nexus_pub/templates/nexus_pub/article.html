@@ -33,9 +33,13 @@
                 <h4 class="fw-bold my-2">Comments</h4>
                 {% if comments %}
                 {% for comment in comments %}
-                <div class="card my-1">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ comment.user }}</h5>
+                <div class="d-flex align-items-start my-2">
+                    <div class="ratio ratio-1x1 me-2" style="width: 35px; height: 35px;">
+                        <img src="{{ comment.user.picture }}" alt="{{ comment.user.name }}"
+                            class="img-fluid rounded-circle" style="object-fit: cover;">
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="card-title">{{ comment.user.name }}</h5>
                         <p class="card-text">{{ comment.content|linebreaksbr|safe }}</p>
                         <p class="card-text"><small class="text-muted">{{ comment.date }}</small></p>
                     </div>

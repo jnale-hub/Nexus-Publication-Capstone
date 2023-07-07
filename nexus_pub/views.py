@@ -139,11 +139,11 @@ def add_comment(request, id):
 
 def login_view(request):
     if request.method == "POST":
-        name = request.POST.get("name")
+        username = request.POST.get("username")
         password = request.POST.get("password")
         article_id = request.POST.get("article_id")
 
-        user = authenticate(request, username=name, password=password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             if article_id:
@@ -162,17 +162,16 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-
 def register(request):
     if request.method == "POST":
-        name = request.POST["name"]
-        email = request.POST["email"]
-
-        article_id = request.POST["article_id"]
+        name = request.POST.get("name")
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        article_id = request.POST.get("article_id")
+        password = request.POST.get("password")
+        confirmation = request.POST.get("confirmation")
 
         # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "nexus_pub/index.html", {
                 "message": "Passwords must match."
@@ -180,15 +179,16 @@ def register(request):
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(name, email, password)
-            user.save()
+            user = User.objects.create_user(name=name, username=username, email=email, password=password)
+            login(request, user)
+            if article_id:
+                article_url = reverse('view_article', kwargs={'id': article_id})
+                return redirect(f"{article_url}#toggle-comments")
+            return HttpResponseRedirect(reverse("index"))
         except IntegrityError as e:
             print(e)
             return render(request, "nexus_pub/index.html", {
                 "message": "Name already taken."
             })
-        login(request, user)
-        if article_id:
-            article_url = reverse('view_article', kwargs={'id': article_id})
-            return redirect(f"{article_url}#toggle-comments")
-        return HttpResponseRedirect(reverse("index"))
+
+    return render(request, "nexus_pub/index.html")
