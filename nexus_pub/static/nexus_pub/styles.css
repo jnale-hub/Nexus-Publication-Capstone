@@ -1,0 +1,10 @@
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

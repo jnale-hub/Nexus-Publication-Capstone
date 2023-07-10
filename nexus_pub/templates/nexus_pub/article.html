@@ -4,8 +4,37 @@
 
 {% block body %}
 <article class="container">
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
     <div class="row">
         <div class="col-lg-8 offset-lg-2">
+
+            <div class="d-flex justify-content-between">
+                <form action="{% url 'star_article' id=article.id %}" method="POST">
+                    {% csrf_token %}
+                    {% if article not in user.starred_articles.all %}
+                        <button type="submit" class="btn btn-outline-primary mt-3"><i class="bi bi-star pe-1"></i>Star Article</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-outline-primary mt-3"><i class="bi bi-star-fill pe-1"></i>Unstar</button>
+                    {% endif %}
+                </form>
+                <form action="{% url 'save_article' id=article.id %}" method="POST">
+                    {% csrf_token %}
+                    {% if article not in user.saved_articles.all %}
+                        <button type="submit" class="btn btn-outline-secondary mt-3"><i class="bi bi-save pe-1"></i>Save Article</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-outline-secondary mt-3"><i class="bi bi-save-fill pe-1"></i>Unsave</button>
+                    {% endif %}
+                </form>
+            </div>            
+
             <h1 class="fs-1 fw-bold mt-3">{{ article.title }}</h1>
             <p class="lead text-muted">{{ article.description }}</p>
             <div class="d-flex justify-content-between mb-3">
@@ -60,25 +89,21 @@
                 <button type="submit" class="btn btn-primary">Submit Comment</button>
             </form>
 
+            <form action="{% url 'star_article' id=article.id %}" method="post">
+                {% csrf_token %}
+                {% if article not in user.starred_article.all %}
+                <button type="submit" class="btn btn-outline-primary mt-3">Star Article</button>
+                {% else %}
+                <button type="submit" class="btn btn-primary mt-3">Unstar</button>
+                {% endif %}
+            </form>           
+            
             {% else %}
 
             <a data-bs-toggle="modal" data-bs-target="#loginModal" class="py-3">Log in to View Comments.</a>
 
             {% endif %}
 
-            <script>
-                document.getElementById('toggle-comments').addEventListener('click', function (event) {
-                    event.preventDefault();
-                    var commentsSection = document.getElementById('comments-section');
-                    if (commentsSection.style.display === 'none') {
-                        commentsSection.style.display = 'block';
-                        this.textContent = 'Hide Comments';
-                    } else {
-                        commentsSection.style.display = 'none';
-                        this.textContent = 'View Comments';
-                    }
-                });
-            </script>
         </div>
     </div>
 </article>

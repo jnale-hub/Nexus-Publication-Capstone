@@ -1,0 +1,98 @@
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="article_id" value="{{ article.id }}">
+          <div class="mb-3">
+            <label for="name" class="form-label">Username</label>
+            <input type="name" class="form-control" name="username" placeholder="Enter username">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="Enter password">
+          </div>
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+          Don't have an account? <a class="" data-bs-toggle="modal" data-bs-target="#registerModal"
+            data-bs-dismiss="modal">Register here.</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="registerModalLabel">Register</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form action="{% url 'register' %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="article_id" value="{{ article.id }}">
+                  <div class="mb-3">
+                      <label for="name" class="form-label">Display Name</label>
+                      <input type="text" class="form-control" name="name" placeholder="Enter your name">
+                  </div>
+                  <div class="mb-3">
+                      <label for="name" class="form-label">Username</label>
+                      <input type="text" class="form-control" name="username" placeholder="Enter your name">
+                  </div>
+                  <div class="mb-3">
+                      <label for="email" class="form-label">Email address</label>
+                      <input type="email" class="form-control" name="email" placeholder="Enter email">
+                  </div>
+                  <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" name="password" placeholder="Enter password">
+                  </div>
+                  <div class="mb-3">
+                      <label for="password" class="form-label">Confirm Password</label>
+                      <input type="password" class="form-control" name="confirmation" placeholder="Confirm password">
+                  </div>
+                  <div class="d-grid mb-3">
+                      <button type="submit" class="btn btn-primary">Register</button>
+                  </div>
+                  Already have an account? <a class="" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Log in instead.</a>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="profileModalLabel">My Profile</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div class="text-center">
+                      <img src="{{ user.picture }}" alt="Profile Picture" class="rounded-circle mb-3"
+                          style="width: 80px; height: 80px; object-fit: cover;">
+                      <h4>{{ user.name }}</h4>
+                      <p class="text-muted">{{ user.username }}</p>
+                      <p>Email: {{ user.email }}</p>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <a href="#" class="btn btn-primary">Edit Profile</a>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
+

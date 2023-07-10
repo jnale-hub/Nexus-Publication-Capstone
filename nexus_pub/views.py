@@ -4,12 +4,13 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.conf import settings
 from datetime import datetime
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.db.models import Max, Q, OuterRef, Subquery
+from django.contrib import messages
 
 from .models import *
 
@@ -136,6 +137,57 @@ def add_comment(request, id):
 
     return redirect('view_article', id=id)
 
+@login_required
+def star_article(request, id):
+
+    article = get_object_or_404(Article, pk=id)
+    user = request.user
+    if request.method == "POST":
+        if article in user.starred_articles.all():
+            user.starred_articles.remove(article)
+        else:
+            user.starred_articles.add(article)
+
+        return HttpResponseRedirect(resolve_url('view_article', id=id))
+
+@login_required
+def save_article(request, id):
+    article = get_object_or_404(Article, pk=id)
+    user = request.user
+    if request.method == "POST":
+        if article in user.saved_articles.all():
+            user.saved_articles.remove(article)
+        else:
+            user.saved_articles.add(article)
+        return HttpResponseRedirect(resolve_url('view_article', id=id))
+
+@login_required
+def starred_articles(request):
+    # Get the logged-in user
+    user = request.user
+
+    # Filter the articles that the user has starred
+    articles = user.starred_articles.all()
+
+    # Send the articles to the template in the context
+    context = {
+        "articles": articles,
+    }
+    return render(request, 'nexus_pub/minimal.html', context)
+
+@login_required
+def saved_articles(request):
+    # Get the logged-in user
+    user = request.user
+
+    # Filter the articles that the user has starred
+    articles = user.saved_articles.all()
+
+    # Send the articles to the template in the context
+    context = {
+        "articles": articles,
+    }
+    return render(request, 'nexus_pub/minimal.html', context)
 
 def login_view(request):
     if request.method == "POST":
