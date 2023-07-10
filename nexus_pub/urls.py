@@ -15,4 +15,5 @@ urlpatterns = [
     path('article/save/<int:id>/', views.save_article, name='save_article'),
     path('starred_articles/', views.starred_articles, name='starred_articles'),
     path('saved_articles/', views.saved_articles, name='saved_articles'),
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
 ]

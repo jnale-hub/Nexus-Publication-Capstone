@@ -22,7 +22,7 @@
                     {% if article not in user.starred_articles.all %}
                         <button type="submit" class="btn btn-outline-primary mt-3"><i class="bi bi-star pe-1"></i>Star Article</button>
                     {% else %}
-                        <button type="submit" class="btn btn-outline-primary mt-3"><i class="bi bi-star-fill pe-1"></i>Unstar</button>
+                        <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-star-fill pe-1"></i>Unstar</button>
                     {% endif %}
                 </form>
                 <form action="{% url 'save_article' id=article.id %}" method="POST">
@@ -30,7 +30,7 @@
                     {% if article not in user.saved_articles.all %}
                         <button type="submit" class="btn btn-outline-secondary mt-3"><i class="bi bi-save pe-1"></i>Save Article</button>
                     {% else %}
-                        <button type="submit" class="btn btn-outline-secondary mt-3"><i class="bi bi-save-fill pe-1"></i>Unsave</button>
+                        <button type="submit" class="btn btn-secondary mt-3"><i class="bi bi-save-fill pe-1"></i>Unsave</button>
                     {% endif %}
                 </form>
             </div>            
@@ -87,16 +87,7 @@
                         required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit Comment</button>
-            </form>
-
-            <form action="{% url 'star_article' id=article.id %}" method="post">
-                {% csrf_token %}
-                {% if article not in user.starred_article.all %}
-                <button type="submit" class="btn btn-outline-primary mt-3">Star Article</button>
-                {% else %}
-                <button type="submit" class="btn btn-primary mt-3">Unstar</button>
-                {% endif %}
-            </form>           
+            </form>    
             
             {% else %}
 

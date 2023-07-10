@@ -189,6 +189,28 @@ def saved_articles(request):
     }
     return render(request, 'nexus_pub/minimal.html', context)
 
+@login_required
+def edit_profile(request):
+    user = request.user
+    
+    if request.method == 'POST':
+        # Get the form inputs from the request
+        name = request.POST.get('name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        
+        # Update the user's data
+        if name:
+            user.name = name
+        if username:
+            user.username = username
+        if email:
+            user.email = email
+        user.save()
+
+        # Redirect the user to a success page or any other desired location
+        return redirect('index')
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")

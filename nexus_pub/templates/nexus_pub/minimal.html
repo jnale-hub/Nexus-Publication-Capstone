@@ -7,19 +7,21 @@
     <div class="row">
         {% if articles %}
         {% for article in articles %}
-        <div class="col-md-6">
-            <div class="card mb-4">
-                {% if article.image %}
-                <img src="{{ article.image }}" class="card-img-top" alt="{{ article.title }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ article.title }}</h5>
-                    <p class="card-text">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="row mb-4">
+                <div class="col-md-2">
+                    {% if article.image %}
+                        <img src="{{ article.image }}" class="img-fluid" alt="{{ article.title }}">
+                    {% endif %}
+                </div>
+                <div class="col-md-10">
+                    <h5 class="mb-0">{{ article.title }}</h5>
+                    <p>
                         <span class="badge bg-primary">{{ article.category }}</span>
                         <span class="text-muted">By {{ article.author }}</span>
                     </p>
                 </div>
-            </div>
+            </div>            
         </div>
         {% endfor %}
         {% else %}
