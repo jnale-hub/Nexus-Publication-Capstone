@@ -21,23 +21,34 @@ def index(request):
     latest_articles = Article.objects.filter(
         category=OuterRef('category')
     ).order_by('-date_published')
-    
+ 
     headlines = Article.objects.filter(
         id=Subquery(latest_articles.values('id')[:1])
     )
 
-    # Fetch articles and paginate the results
+    # Fetch articles and order them by date_published
     articles = Article.objects.exclude(
         id__in=headlines.values('id')
     ).order_by("-date_published")
 
-    # Send the article feed and headlines to the template in the context
+    # Create a Paginator object and specify the number of articles per page
+    paginator = Paginator(articles, 12)  # Show 10 articles per page
+
+    # Get the current page number from the request's GET parameters
+    page_number = request.GET.get('page')
+
+    # Get the corresponding page from the Paginator object
+    page_obj = paginator.get_page(page_number)
+
+    # Send the article feed, headlines, and page_obj to the template in the context
     context = {
         "categories": categories,
-        "articles": articles,
+        "articles": page_obj,
         "headlines": headlines,
+        "page_obj": page_obj,
     }
     return render(request, 'nexus_pub/index.html', context)
+
 
 
 def view_article(request, id):
@@ -66,13 +77,25 @@ def view_category(request, category):
 
 def view_staff(request, name):
     staff = Staff.objects.get(name=name)
-    articles = Article.objects.filter(author=staff)
+    articles = Article.objects.filter(author=staff).order_by('-date_published')
 
+    # Create a Paginator object and specify the number of articles per page
+    paginator = Paginator(articles, 3)  # Show 10 articles per page
+
+    # Get the current page number from the request's GET parameters
+    page_number = request.GET.get('page')
+
+    # Get the corresponding page from the Paginator object
+    page_obj = paginator.get_page(page_number)
+
+    # Send the staff, articles, and page_obj to the template in the context
     context = {
         "staff": staff,
-        "articles": articles,
+        "articles": page_obj,
+        "page_obj": page_obj,
     }
     return render(request, 'nexus_pub/staff.html', context)
+
 
 
 def search(request):
