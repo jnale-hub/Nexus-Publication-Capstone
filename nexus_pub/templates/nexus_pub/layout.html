@@ -27,13 +27,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav justify-content-between">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                        <a class="nav-link" href="{% url 'index' %}"><i class="bi bi-house pe-2"></i>Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'world_news' %}">World News</a>
+                        <a class="nav-link" href="{% url 'world_news' %}"><i class="bi bi-globe pe-2"></i>World News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Games</a>
+                        <a class="nav-link" href="#"><i class="bi bi-table pe-2"></i>Games</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item dropdown d-none d-xl-block">
@@ -46,7 +46,7 @@
                           </a>
                           <ul class="dropdown-menu dropdown-menu-arrow profile py-0">
                             <li>
-                              <a class="dropdown-item d-flex align-items-center py-2" href="{% url 'starred_articles' %}">
+                              <a class="dropdown-item d-flex align-items-center py-2 me-3" href="{% url 'starred_articles' %}">
                                 <i class="bi bi-star-fill pe-2"></i>
                                 <span>Starred Articles</span>
                               </a>
@@ -127,10 +127,10 @@
     
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal"><i class="bi bi-pen pe-2"></i>Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person pe-2"></i>Login</a>
                     </li>
                     {% endif %}
                     <li class="nav-item d-lg-none">

@@ -134,12 +134,21 @@ def search(request):
         end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
         articles = articles.filter(date_published__lte=end_date)
         date_range = f"until {end_date.strftime('%B %d, %Y')}"
-    
+
+    paginator = Paginator(articles, 12)  # Show 10 articles per page
+
+    # Get the current page number from the request's GET parameters
+    page_number = request.GET.get('page')
+
+    # Get the corresponding page from the Paginator object
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "articles": articles,
+        "articles": page_obj,
         "date_range": date_range,
         "search": query,
         "categories": categories,
+        "page_obj": page_obj
     }
     
     return render(request, 'nexus_pub/index.html', context)
