@@ -8,6 +8,15 @@
     {% if message %}
     <div>{{ message }}</div>
     {% endif %}
+    {% if messages %}
+    <div class="alert alert-danger" role="alert">
+        <ul class="list-unstyled">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul> 
+    </div>
+{% endif %}
     {% if headlines %}
     <div id="articleCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">

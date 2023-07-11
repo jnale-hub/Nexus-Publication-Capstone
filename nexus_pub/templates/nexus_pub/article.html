@@ -6,12 +6,12 @@
 <article class="container">
     {% if messages %}
     {% for message in messages %}
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {% endfor %}
-{% endif %}
+    {% endif %}
 
     <div class="row">
         <div class="col-lg-8 offset-lg-2">
@@ -20,21 +20,25 @@
                 <form action="{% url 'star_article' id=article.id %}" method="POST">
                     {% csrf_token %}
                     {% if article not in user.starred_articles.all %}
-                        <button type="submit" class="btn btn-outline-primary mt-3"><i class="bi bi-star pe-1"></i>Star Article</button>
+                    <button type="submit" class="btn btn-outline-primary mt-3"><i class="bi bi-star pe-1"></i>Star
+                        Article</button>
                     {% else %}
-                        <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-star-fill pe-1"></i>Unstar</button>
+                    <button type="submit" class="btn btn-primary mt-3"><i
+                            class="bi bi-star-fill pe-1"></i>Unstar</button>
                     {% endif %}
                 </form>
                 <form action="{% url 'save_article' id=article.id %}" method="POST">
                     {% csrf_token %}
                     {% if article not in user.saved_articles.all %}
-                        <button type="submit" class="btn btn-outline-secondary mt-3"><i class="bi bi-save pe-1"></i>Save Article</button>
+                    <button type="submit" class="btn btn-outline-secondary mt-3"><i class="bi bi-save pe-1"></i>Save
+                        Article</button>
                     {% else %}
-                        <button type="submit" class="btn btn-secondary mt-3"><i class="bi bi-save-fill pe-1"></i>Unsave</button>
+                    <button type="submit" class="btn btn-secondary mt-3"><i
+                            class="bi bi-save-fill pe-1"></i>Unsave</button>
                     {% endif %}
                 </form>
-            </div>    
-            {% endif %}        
+            </div>
+            {% endif %}
 
             <h1 class="fs-1 fw-bold mt-3">{{ article.title }}</h1>
             <p class="lead text-muted">{{ article.description }}</p>
@@ -57,29 +61,35 @@
 
             <hr>
             {% if user.is_authenticated %}
-
             <a id="toggle-comments" class="mb-3">View Comments</a>
             <div id="comments-section" style="display: none;">
                 <h4 class="fw-bold my-2">Comments</h4>
                 {% if comments %}
-                {% for comment in comments %}
-                <div class="d-flex align-items-start my-2">
-                    <div class="ratio ratio-1x1 me-2" style="width: 35px; height: 35px;">
-                        <img src="{{ comment.user.picture }}" alt="{{ comment.user.name }}"
-                            class="img-fluid rounded-circle" style="object-fit: cover;">
+                <div id="comments-container">
+                    {% for comment in comments %}
+                    <div class="comment-item" style="display: none;">
+                    <div class="row mx-2">
+                        <div class="col-2 ratio ratio-1x1" style="width: 35px; height: 35px;">
+                            <img src="{{ comment.user.picture }}" alt="{{ comment.user.name }}"
+                                class="img-fluid rounded-circle" style="object-fit: cover;">
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="title">{{ comment.user.name }}</h5>
+                                <small class="text-muted">{{ comment.date }}</small>
+                            </div>
+                            <p class="text">{{ comment.content|linebreaksbr|safe }}</p>
+                        </div>
                     </div>
-                    <div class="flex-grow-1">
-                        <h5 class="card-title">{{ comment.user.name }}</h5>
-                        <p class="card-text">{{ comment.content|linebreaksbr|safe }}</p>
-                        <p class="card-text"><small class="text-muted">{{ comment.date }}</small></p>
-                    </div>
+                    <hr>
                 </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
+                <a id="see-more-button" class="float-end">See more comments</a>
                 {% else %}
                 <p>No comments yet.</p>
                 {% endif %}
             </div>
-
             <h4 class="fw-bold my-2">Leave a Comment</h4>
             <form method="POST" action="{% url 'add_comment' id=article.id %}" class="mb-2">
                 {% csrf_token %}
@@ -88,8 +98,8 @@
                         required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit Comment</button>
-            </form>    
-            
+            </form>
+
             {% else %}
 
             <a data-bs-toggle="modal" data-bs-target="#loginModal" class="py-3">Log in to View Comments.</a>

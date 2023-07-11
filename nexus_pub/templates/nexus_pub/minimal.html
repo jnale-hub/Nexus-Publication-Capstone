@@ -4,6 +4,13 @@
 
 {% block body %}
 <article class="container">
+    <h2 class="text-center fw-bold py-2">
+        {% if starred %}
+        Starred Articles
+        {% elif saved %}
+        Saved Articles
+        {% endif %}
+    </h2>
     <div class="row">
         {% if articles %}
         {% for article in articles %}
@@ -15,17 +22,18 @@
                     {% endif %}
                 </div>
                 <div class="col-md-10">
-                    <h5 class="mb-0">{{ article.title }}</h5>
-                    <p>
+                    <a href="{% url 'view_article' id=article.id %}" class="text-reset text-decoration-none">
+                        <h5 class="mb-0">{{ article.title }}</h5>
                         <span class="badge bg-primary">{{ article.category }}</span>
                         <span class="text-muted">By {{ article.author }}</span>
-                    </p>
+                        <span class="text-muted">| {{ article.date_published }}</span>
+                    </a>
                 </div>
             </div>            
         </div>
         {% endfor %}
         {% else %}
-        No available article.
+        <p class="">No available article.</p>
         {% endif %}
     </div>
 </article>

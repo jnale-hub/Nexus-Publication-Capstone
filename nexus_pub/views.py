@@ -195,6 +195,7 @@ def starred_articles(request):
     # Send the articles to the template in the context
     context = {
         "articles": articles,
+        "starred": True,
     }
     return render(request, 'nexus_pub/minimal.html', context)
 
@@ -209,6 +210,7 @@ def saved_articles(request):
     # Send the articles to the template in the context
     context = {
         "articles": articles,
+        "saved": True,
     }
     return render(request, 'nexus_pub/minimal.html', context)
 
@@ -230,6 +232,7 @@ def edit_profile(request):
         if email:
             user.email = email
         user.save()
+        messages.success(request, 'Profile updated successfully.')
 
         # Redirect the user to a success page or any other desired location
         return redirect('index')
