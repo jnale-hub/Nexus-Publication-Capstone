@@ -20,22 +20,21 @@
                 <form action="{% url 'star_article' id=article.id %}" method="POST">
                     {% csrf_token %}
                     {% if article not in user.starred_articles.all %}
-                    <button type="submit" class="d-flex btn btn-outline-primary mt-3"><i class="bi bi-star pe-1"></i>
-                        <span class="d-none d-md-block">Star Article</span></button>
+                    <button type="submit" class="d-flex btn btn-outline-primary mt-3"><i class="bi bi-star"></i>
+                        <span class="d-none d-md-block ps-1">Star Article</span></button>
                     {% else %}
-                    <button type="submit" class="d-flex btn btn-primary mt-3"><i
-                            class="bi bi-star-fill pe-1"></i><span class="d-none d-md-block">Unstar</span></button>
+                    <button type="submit" class="d-flex btn btn-primary mt-3"><i class="bi bi-star-fill"></i><span
+                            class="d-none d-md-block ps-1">Unstar</span></button>
                     {% endif %}
                 </form>
                 <form action="{% url 'save_article' id=article.id %}" method="POST">
                     {% csrf_token %}
                     {% if article not in user.saved_articles.all %}
-                    <button type="submit" class="d-flex btn btn-outline-secondary mt-3"><i class="bi bi-save pe-1"></i>
-                        <span class="d-none d-md-block">Save Article</span></button>
+                    <button type="submit" class="d-flex btn btn-outline-secondary mt-3"><i class="bi bi-save"></i>
+                        <span class="d-none d-md-block ps-1">Save Article</span></button>
                     {% else %}
-                    <button type="submit" class="d-flex btn btn-secondary mt-3"><i
-                            class="bi bi-save-fill pe-1"></i>
-                            <span class="d-none d-md-block">Unsave</span></button>
+                    <button type="submit" class="d-flex btn btn-secondary mt-3"><i class="bi bi-save-fill"></i>
+                        <span class="d-none d-md-block ps-1">Unsave</span></button>
                     {% endif %}
                 </form>
             </div>
@@ -59,54 +58,64 @@
             <img src="{{ article.image }}" alt="{{ article.title }}" class="img-fluid mb-4 w-100">
             {% endif %}
             <div class="my-4 fs-5">{{ article.content|linebreaksbr|safe }}</div>
-
-            <hr>
-            {% if user.is_authenticated %}
-            <a id="toggle-comments" class="mb-3">View Comments</a>
-            <div id="comments-section" style="display: none;">
-                <h4 class="fw-bold my-2">Comments</h4>
-                {% if comments %}
-                <div id="comments-container">
-                    {% for comment in comments %}
-                    <div class="comment-item" style="display: none;">
-                    <div class="row mx-2">
-                        <div class="col-2 ratio ratio-1x1" style="width: 35px; height: 35px;">
-                            <img src="{{ comment.user.picture }}" alt="{{ comment.user.name }}"
-                                class="img-fluid rounded-circle" style="object-fit: cover;">
-                        </div>
-                        <div class="col-10">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="title">{{ comment.user.name }}</h5>
-                                <small class="text-muted">{{ comment.date }}</small>
-                            </div>
-                            <p class="text">{{ comment.content|linebreaksbr|safe }}</p>
-                        </div>
-                    </div>
-                </div>
-                    {% endfor %}
-                </div>
-                <a id="see-more-button" class="float-end">See more comments</a>
-                {% else %}
-                <p>No comments yet.</p>
-                {% endif %}
-            </div>
-            <h4 class="fw-bold my-2">Leave a Comment</h4>
-            <form method="POST" action="{% url 'add_comment' id=article.id %}" class="mb-2">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <textarea class="form-control" id="comment_content" name="comment_content" rows="3"
-                        required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit Comment</button>
-            </form>
-
-            {% else %}
-
-            <a data-bs-toggle="modal" data-bs-target="#loginModal" class="py-3">Log in to View Comments.</a>
-
-            {% endif %}
-
         </div>
     </div>
 </article>
+
+{% if user.is_authenticated %}
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <p class="fw-bold fs-5">{{ comments.all|length }} Comments to "{{ article.title}}"</p>
+                <a id="toggle-comments" class="mb-3">View Comments</a>
+
+                <div id="comments-section" style="display: none;">
+                    {% if comments %}
+                    {% for comment in comments %}
+                    <div id="comments-container" class="bg-white shadow-sm">
+                        <div class="comment-item p-3 my-3" style="display: none;">
+                            <div class="">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex">
+                                        <div class="ratio ratio-1x1 me-2" style="width: 35px; height: 35px;">
+                                            <img src="{{ comment.user.picture }}" alt="{{ comment.user.name }}"
+                                                class="img-fluid rounded-circle" style="object-fit: cover;">
+                                        </div>
+                                        <h5 class="my-auto">{{ comment.user.name }}</h5>
+                                    </div>
+                                    <small class="text-muted">{{ comment.date }}</small>
+                                </div>
+                                    <p class="text m-3">{{ comment.content|linebreaksbr|safe }}</p>
+                            </div>
+                        </div>
+                    </div>
+                        {% endfor %}
+
+                        <a id="see-more-button" class="float-end">See more comments</a>
+                        {% else %}
+                        <p>No comments yet.</p>
+                        {% endif %}
+                    </div>
+                
+                <h4 class="fw-bold my-2">Leave a Comment</h4>
+                <form method="POST" action="{% url 'add_comment' id=article.id %}" class="mb-2">
+                    {% csrf_token %}
+                    <div class="mb-3 ">
+                        <textarea class="form-control shadow-sm" id="comment_content" name="comment_content" rows="3"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Comment</button>
+                </form>
+
+                {% else %}
+
+                <a data-bs-toggle="modal" data-bs-target="#loginModal" class="py-3">Log in to View Comments.</a>
+
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
