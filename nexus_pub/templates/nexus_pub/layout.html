@@ -14,6 +14,7 @@
     <link href="{% static 'nexus_pub/styles.css' %}" rel="stylesheet">
     <script src="{% static 'nexus_pub/main.js' %}"></script>
     <link rel="shortcut icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/7553/7553719.png">
+    {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -33,7 +34,7 @@
                         <a class="nav-link" href="{% url 'world_news' %}"><i class="bi bi-globe pe-2"></i>World News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="bi bi-table pe-2"></i>Games</a>
+                        <a class="nav-link" href="{% url 'games' %}"><i class="bi bi-table pe-2"></i>Games</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item dropdown d-none d-xl-block">
@@ -44,50 +45,7 @@
                           <a class="nav-link dropdown-toggle text-capitalize" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ user.name }}
                           </a>
-                          <ul class="dropdown-menu dropdown-menu-arrow profile py-0">
-                            <li>
-                              <a class="dropdown-item d-flex align-items-center py-2 me-3" href="{% url 'starred_articles' %}">
-                                <i class="bi bi-star-fill pe-2"></i>
-                                <span>Starred Articles</span>
-                              </a>
-                            </li>
-                            <li>
-                              <hr class="dropdown-divider m-0">
-                            </li>
-                            <li>
-                              <a class="dropdown-item d-flex align-items-center py-2" href="{% url 'saved_articles' %}">
-                                <i class="bi bi-save2 pe-2"></i>
-                                <span>Saved Articles</span>
-                              </a>
-                            </li>
-                            <li>
-                              <hr class="dropdown-divider m-0">
-                            </li>
-                            <li>
-                              <a class="dropdown-item d-flex align-items-center py-2" data-bs-toggle="modal" data-bs-target="#profileModal">
-                                <i class="bi bi-person pe-2"></i>
-                                <span>My Profile</span>
-                              </a>
-                            </li>
-                            <li>
-                              <hr class="dropdown-divider m-0">
-                            </li>
-                            <li>
-                              <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                <i class="bi bi-gear pe-2"></i>
-                                <span>Edit Profile</span>
-                              </a>
-                            </li>
-                            <li>
-                              <hr class="dropdown-divider m-0">
-                            </li>
-                            <li>
-                              <a class="dropdown-item d-flex align-items-center py-2" href="{% url 'logout' %}">
-                                <i class="bi bi-box-arrow-right pe-2"></i>
-                                <span>Log Out</span>
-                              </a>
-                            </li>
-                          </ul>
+                          {% include 'nexus_pub/profile-dropdown.html' %}
                         </div>
                       </li>
                       
@@ -148,18 +106,7 @@
                         </ul>
                     </li>
                 </ul>
-                <form action="{% url 'search' %}" method="GET">
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="q" placeholder="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Search</button>
-                        </div>
-                    </div>
-                </form>
-                <button class="btn btn-primary mx-xl-3 my-2" type="button" data-bs-toggle="modal"
-                    data-bs-target="#dateFilterModal">
-                    Filter Date
-                </button>
+                {% include 'nexus_pub/search-form.html' %}
             </div>
         </div>
     </nav>
@@ -176,36 +123,7 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="modal fade" id="dateFilterModal" tabindex="-1" aria-labelledby="dateFilterModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="dateFilterModalLabel">Date Filter</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{% url 'search' %}" method="GET">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="start_date" class="form-label">Start Date:</label>
-                                    <input type="date" id="start_date" name="start_date" class="form-control">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="end_date" class="form-label">End Date:</label>
-                                    <input type="date" id="end_date" name="end_date" class="form-control">
-                                </div>
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <main class="content">
         {% block body %}

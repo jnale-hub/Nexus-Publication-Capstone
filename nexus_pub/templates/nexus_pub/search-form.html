@@ -1,0 +1,12 @@
+<form action="{% url 'search' %}" method="GET">
+    <div class="input-group">
+        <input type="text" class="form-control shadow-sm" name="q" placeholder="Search">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+<button class="btn btn-primary mx-xl-3 my-2" type="button" data-bs-toggle="modal"
+    data-bs-target="#dateFilterModal">
+    Filter Date
+</button>

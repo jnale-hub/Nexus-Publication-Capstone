@@ -246,6 +246,44 @@ def edit_profile(request):
         # Redirect the user to a success page or any other desired location
         return redirect('index')
 
+def games(request):
+    return render(request, "games/games.html", {"games": True})
+
+def wordle(request):
+    return render(request, "games/wordle.html")
+
+def point(request):
+    pass 
+
+@login_required
+@csrf_exempt
+def post(request, post_id):
+    if request.method != "PUT":
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    data = json.loads(request.body)
+
+    if "toggle_like" in data:
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+
+    if "content" in data:
+        if request.user != post.author:
+            return JsonResponse({"error": "Unauthorized edit."}, status=401)
+        else:
+            post.content = data["content"]
+
+    post.save()
+    return JsonResponse({"num_likes": post.likes.count()}, status=201)
+
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")

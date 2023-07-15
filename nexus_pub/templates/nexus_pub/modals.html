@@ -132,4 +132,34 @@
   </div>
 </div>
 
-
+<!-- Filter Date Modal -->
+<div class="container">
+  <div class="modal fade" id="dateFilterModal" tabindex="-1" aria-labelledby="dateFilterModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="dateFilterModalLabel">Date Filter</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form action="{% url 'search' %}" method="GET">
+                      <div class="row mb-3">
+                          <div class="col-md-6">
+                              <label for="start_date" class="form-label">Start Date:</label>
+                              <input type="date" id="start_date" name="start_date" class="form-control">
+                          </div>
+                          <div class="col-md-6">
+                              <label for="end_date" class="form-label">End Date:</label>
+                              <input type="date" id="end_date" name="end_date" class="form-control">
+                          </div>
+                      </div>
+                      <div class="d-grid">
+                          <button type="submit" class="btn btn-primary">Filter</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

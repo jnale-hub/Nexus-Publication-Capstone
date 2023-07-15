@@ -1,0 +1,45 @@
+
+<ul class="dropdown-menu dropdown-menu-arrow profile py-0">
+    <li>
+      <a class="dropdown-item d-flex align-items-center py-2 me-3" href="{% url 'starred_articles' %}">
+        <i class="bi bi-star-fill pe-2"></i>
+        <span>Starred Articles</span>
+      </a>
+    </li>
+    <li>
+      <hr class="dropdown-divider m-0">
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center py-2" href="{% url 'saved_articles' %}">
+        <i class="bi bi-save2 pe-2"></i>
+        <span>Saved Articles</span>
+      </a>
+    </li>
+    <li>
+      <hr class="dropdown-divider m-0">
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center py-2" data-bs-toggle="modal" data-bs-target="#profileModal">
+        <i class="bi bi-person pe-2"></i>
+        <span>My Profile</span>
+      </a>
+    </li>
+    <li>
+      <hr class="dropdown-divider m-0">
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center py-2" href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+        <i class="bi bi-gear pe-2"></i>
+        <span>Edit Profile</span>
+      </a>
+    </li>
+    <li>
+      <hr class="dropdown-divider m-0">
+    </li>
+    <li>
+      <a class="dropdown-item d-flex align-items-center py-2" href="{% url 'logout' %}">
+        <i class="bi bi-box-arrow-right pe-2"></i>
+        <span>Log Out</span>
+      </a>
+    </li>
+  </ul>

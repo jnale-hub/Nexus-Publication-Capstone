@@ -68,10 +68,9 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
                 <p class="fw-bold fs-5">{{ comments.all|length }} Comments to "{{ article.title}}"</p>
+                {% if comments %}
                 <a id="toggle-comments" class="mb-3">View Comments</a>
-
                 <div id="comments-section" style="display: none;">
-                    {% if comments %}
                     {% for comment in comments %}
                     <div id="comments-container" class="bg-white shadow-sm">
                         <div class="comment-item p-3 my-3" style="display: none;">
@@ -86,18 +85,15 @@
                                     </div>
                                     <small class="text-muted">{{ comment.date }}</small>
                                 </div>
-                                    <p class="text m-3">{{ comment.content|linebreaksbr|safe }}</p>
+                                <p class="text m-3">{{ comment.content|linebreaksbr|safe }}</p>
                             </div>
                         </div>
                     </div>
-                        {% endfor %}
+                    {% endfor %}
+                    <a id="see-more-button" class="float-end">See more comments</a>
+                </div>
+                {% endif %}
 
-                        <a id="see-more-button" class="float-end">See more comments</a>
-                        {% else %}
-                        <p>No comments yet.</p>
-                        {% endif %}
-                    </div>
-                
                 <h4 class="fw-bold my-2">Leave a Comment</h4>
                 <form method="POST" action="{% url 'add_comment' id=article.id %}" class="mb-2">
                     {% csrf_token %}

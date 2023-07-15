@@ -1,0 +1,50 @@
+{% extends "games/layout.html" %}
+
+{% block title %} Games } {% endblock %}
+
+{% block body %}
+
+<article class="container">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2 my-2 my-md-4">
+            <h2 class="mb-4 text-center fw-bold">Games</h2>
+            <div class="row">
+                <div class="col-md-4 col-6 mb-5">
+                    <div class="card text-center shadow border-0">
+                        <img src="https://wordlegame.org/assets/img/weaver-play.png?v4" class="card-img-top" alt="Wordle game image" loading="lazy">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold my-1">Wordle</h4>
+                            <p class="card-text my-1">Solve a wordle</p>
+                            <button class="btn btn-outline-primary py-1 mt-2">Play</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6 mb-5">
+                    <div class="card text-center shadow border-0">
+                        <img src="https://wordlegame.org/assets/img/weaver-play.png?v4" class="card-img-top" alt="Wordle game image" loading="lazy">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold my-1">Spelling Bee</h4>
+                            <p class="card-text my-1">Solve a wordle</p>
+                            <a class="btn btn-outline-primary py-1 mt-2" href="{% url 'wordle' %}">Play</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-6 mb-5">
+                    <div class="card text-center shadow border-0">
+                        <img src="https://wordlegame.org/assets/img/weaver-play.png?v4" class="card-img-top" alt="Wordle game image" loading="lazy">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold my-1">Quiz Bee</h4>
+                            <p class="card-text my-1">Solve a wordle</p>
+                            <button class="btn btn-outline-primary py-1 mt-2">Play</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Add more games here -->
+            </div>  
+        </div>
+    </div>
+</article>
+
+{% endblock %}
