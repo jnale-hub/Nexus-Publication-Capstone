@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.db.models import Max, Q, OuterRef, Subquery
 from django.contrib import messages
+from django.http import JsonResponse
 
 from .models import *
 
@@ -252,36 +253,18 @@ def games(request):
 def wordle(request):
     return render(request, "games/wordle.html")
 
-def point(request):
-    pass 
-
-@login_required
 @csrf_exempt
-def post(request, post_id):
-    if request.method != "PUT":
-        return JsonResponse({"error": "PUT request required."}, status=400)
-
-    try:
-        post = Post.objects.get(pk=post_id)
-    except Post.DoesNotExist:
-        return JsonResponse({"error": "Post not found."}, status=404)
-
-    data = json.loads(request.body)
-
-    if "toggle_like" in data:
-        if request.user in post.likes.all():
-            post.likes.remove(request.user)
-        else:
-            post.likes.add(request.user)
-
-    if "content" in data:
-        if request.user != post.author:
-            return JsonResponse({"error": "Unauthorized edit."}, status=401)
-        else:
-            post.content = data["content"]
-
-    post.save()
-    return JsonResponse({"num_likes": post.likes.count()}, status=201)
+@login_required
+def update_points(request):
+    if request.method == "POST":
+        user = request.user
+        user.points += 1
+        user.save()
+        return JsonResponse({
+            "success": True,
+            "points": user.points,
+        })
+    return JsonResponse({"success": False})
 
 
 def login_view(request):

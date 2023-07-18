@@ -56,19 +56,81 @@ function deleteLetter() {
   currentGuess.pop();
   nextLetter -= 1;
 }
+// Keep track of queued messages
+const messageQueue = [];
+let isShowingMessage = false;
+let isKeyPressed = false;
+
+function showMessage(message) {
+  // Add the message to the queue
+  messageQueue.push(message);
+
+  // If a message is already being shown, return
+  if (isShowingMessage) {
+    return;
+  }
+
+  // Show the next message in the queue
+  showNextMessage();
+}
+
+function showNextMessage() {
+  // If there are no more messages in the queue, return
+  if (messageQueue.length === 0 || isKeyPressed) {
+    isShowingMessage = false;
+    return;
+  }
+
+  // Get the next message from the queue
+  const message = messageQueue.shift();
+
+  // Update the message element with the new message
+  const messageElement = document.getElementById("message");
+  messageElement.textContent = message;
+  messageElement.classList.remove("modal-fade-out");
+  messageElement.classList.add("modal-fade-in");
+  messageElement.style.display = "block";
+
+  setTimeout(() => {
+    messageElement.classList.remove("modal-fade-in");
+    messageElement.classList.add("modal-fade-out");
+
+    setTimeout(() => {
+      messageElement.style.display = "none";
+      // Show the next message in the queue
+      showNextMessage();
+    }, 300);
+  }, 2000); // Adjust the delay as per your preference
+
+  isShowingMessage = true;
+}
+
+// Add an event listener for keydown event to stop showing messages
+document.addEventListener("keydown", () => {
+  isKeyPressed = true;
+  // Clear the message queue and hide the message element
+  messageQueue.length = 0;
+  const messageElement = document.getElementById("message");
+  messageElement.style.display = "none";
+});
+
+// Reset the isKeyPressed flag on keyup event
+document.addEventListener("keyup", () => {
+  isKeyPressed = false;
+});
 
 function checkGuess() {
   const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
   const guessString = currentGuess.join("");
   const rightGuess = Array.from(rightGuessString);
 
-  if (guessString.length !== 5) {
-    toastr.error("Not enough letters!");
+  if (guessString.length !== WORD_LENGTH) {
+    showMessage("Not enough letters!");
     return;
   }
 
   if (!WORDS.includes(guessString)) {
-    toastr.error("Word not in list!");
+    showMessage("Word not in list!");
     return;
   }
 
@@ -83,10 +145,10 @@ function checkGuess() {
   }
 
   // Check yellow
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < WORD_LENGTH; i++) {
     if (letterColor[i] === "green") continue;
 
-    for (let j = 0; j < 5; j++) {
+    for (let j = 0; j < WORD_LENGTH; j++) {
       if (rightGuess[j] === currentGuess[i]) {
         letterColor[i] = "yellow";
         rightGuess[j] = "#";
@@ -94,7 +156,7 @@ function checkGuess() {
     }
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < WORD_LENGTH; i++) {
     const box = row.children[i];
     const delay = 250 * i;
     setTimeout(() => {
@@ -105,7 +167,7 @@ function checkGuess() {
   }
 
   if (guessString === rightGuessString) {
-    toastr.success("You guessed right! Game over!");
+    showMessage("You guessed right! Game over!");
     guessesRemaining = 0;
     return;
   } else {
@@ -114,8 +176,8 @@ function checkGuess() {
     nextLetter = 0;
 
     if (guessesRemaining === 0) {
-      toastr.error("You've run out of guesses! Game over!");
-      toastr.info(`The right word was: "${rightGuessString}"`);
+      showMessage("You've run out of guesses! Game over!");
+      showMessage(`The right word was: "${rightGuessString}"`);
     }
   }
 }

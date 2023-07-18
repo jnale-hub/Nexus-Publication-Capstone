@@ -24,26 +24,28 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav justify-content-between">
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{% url 'index' %}"><i class="bi bi-house pe-2 fs-4"></i><span class="d-none d-md-block">Home</span></a>
+                        <a class="nav-link d-flex align-items-center" href="{% url 'index' %}" title="Home"><i
+                                class="bi bi-house pe-2 fs-4"></i><span class="d-none d-lg-block">Home</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{% url 'world_news' %}"><i class="bi bi-globe pe-2 fs-4"></i><span class="d-none d-md-block">World News</span></a>
+                        <a class="nav-link d-flex align-items-center" href="{% url 'world_news' %}" title="World News"><i
+                                class="bi bi-globe pe-2 fs-4"></i><span class="d-none d-lg-block">World News</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{% url 'games' %}"><i class="bi bi-table pe-2 fs-4"></i><span class="d-none d-md-block">Games</span></a>
+                        <a class="nav-link d-flex align-items-center" href="{% url 'games' %}" title="Games"><i
+                                class="bi bi-table pe-2 fs-4"></i><span class="d-none d-lg-block">Games</span></a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center">
-                            <div class="ratio ratio-1x1 ms-md-2 me-2 my-md-1" style="width: 30px; height: 30px;">
-                                <img src="{{ user.picture }}" alt="{{ user.name }}" class="img-fluid rounded-circle"
+                        <a class="nav-link d-flex align-items-center" title="{{ user.name }}">
+                            <div class="ratio ratio-1x1 mx-md-2 me-3 mt-1" style="width: 28px; height: 28px;">
+                                <img src="{{ user.picture }}" alt="{{ user.name }}" class="rounded-circle"
                                     style="object-fit: cover;">
                             </div>
-                            <span class="text-capitalize d-none d-md-block">{{ user.name }}-</span>
-                            <span class="fw-bold">{{ user.points }} PTS</span>
+                            <div class="text-capitalize d-none d-lg-block pe-3">{{ user.name }}</div>
+                            <div class="badge bg-primary fw-bold fs-6"><span id="points-num">{{ user.points }}</span> Points</div>
                         </a>
                     </li>
-
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal"><i

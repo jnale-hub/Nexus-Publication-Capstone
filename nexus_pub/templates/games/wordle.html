@@ -1,20 +1,18 @@
-{% extends "nexus_pub/layout.html" %}
+{% extends "games/layout.html" %}
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'games/wordle.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+<link rel="stylesheet" href="{% static 'games/wordle.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 {% endblock %}
 {% block body %}
+<div class="container my-3">
     <h1> Classic Wordle </h1>
-    
-    <div id="game-board">
 
+    <div id="message" class="fw-bold fs-5 p-4 rounded"></div>
+
+    <div id="game-board">
     </div>
 
     <div id="keyboard-cont">
@@ -53,12 +51,10 @@
             <button class="keyboard-button">Enter</button>
         </div>
     </div>
+</div>
 
-<script
-src="https://code.jquery.com/jquery-3.6.0.min.js"
-integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="{% static 'games/wordle.js' %}" type="module"></script>
 
 {% endblock %}

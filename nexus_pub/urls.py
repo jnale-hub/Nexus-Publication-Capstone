@@ -18,4 +18,5 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('games/wordle', views.wordle, name='wordle'),
     path('games/', views.games, name='games'),
+    path('update-points/', views.update_points, name='update_points'),
 ]
