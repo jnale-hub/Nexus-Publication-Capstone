@@ -1,6 +1,6 @@
 {% extends "games/layout.html" %}
 
-{% block title %} Games } {% endblock %}
+{% block title %} Games | {% endblock %}
 
 {% block body %}
 
@@ -9,9 +9,10 @@
         <div class="col-lg-8 offset-lg-2 my-2 my-md-4">
             <h2 class="mb-4 text-center fw-bold">Games</h2>
             <div class="row">
-                <div class="col-md-4 col-6 mb-5">
+                <div class="col-md-4 col-sm-6 mb-5">
                     <div class="card text-center shadow border-0">
-                        <img src="https://wordlegame.org/assets/img/weaver-play.png?v4" class="card-img-top" alt="Wordle game image" loading="lazy">
+                        <img src="https://wordlegame.org/assets/img/unwordle-play.png?v4" class="card-img-top"
+                            alt="Wordle game image" loading="lazy">
                         <div class="card-body">
                             <h4 class="card-title fw-bold my-1">Wordle</h4>
                             <p class="card-text my-1">Solve a wordle</p>
@@ -19,9 +20,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-6 mb-5">
+                <div class="col-md-4 col-sm-6 mb-5">
                     <div class="card text-center shadow border-0">
-                        <img src="https://wordlegame.org/assets/img/weaver-play.png?v4" class="card-img-top" alt="Wordle game image" loading="lazy">
+                        <img src="data:image/png;base64,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"
+                            class="card-img-top" alt="Wordle game image" loading="lazy">
                         <div class="card-body">
                             <h4 class="card-title fw-bold my-1">Spelling Bee</h4>
                             <p class="card-text my-1">Solve a wordle</p>
@@ -29,9 +31,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-6 mb-5">
+                <div class="col-md-4 col-sm-6 mb-5">
                     <div class="card text-center shadow border-0">
-                        <img src="https://wordlegame.org/assets/img/weaver-play.png?v4" class="card-img-top" alt="Wordle game image" loading="lazy">
+                        <img src="https://wordlegame.org/assets/img/weaver-play.png?v4" class="card-img-top"
+                            alt="Wordle game image" loading="lazy">
                         <div class="card-body">
                             <h4 class="card-title fw-bold my-1">Quiz Bee</h4>
                             <p class="card-text my-1">Solve a wordle</p>
@@ -42,9 +45,10 @@
             </div>
             <div class="row">
                 <!-- Add more games here -->
-            </div>  
+            </div>
         </div>
     </div>
 </article>
+
 
 {% endblock %}

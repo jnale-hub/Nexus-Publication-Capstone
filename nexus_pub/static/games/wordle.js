@@ -56,6 +56,27 @@ function deleteLetter() {
   currentGuess.pop();
   nextLetter -= 1;
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Add the click event listener to the final-message element
+  const finalMessageElement = document.getElementById("final-message");
+  finalMessageElement.addEventListener("click", toggleModal);
+
+  // Rest of your DOMContentLoaded code here
+});
+
+
+function toggleModal() {
+  const messageElement = document.getElementById("final-message");
+  const isWinMessage = messageElement.textContent.includes("You Win!");
+
+  if (isWinMessage) {
+    showWinModal();
+  } else {
+    showLoseModal(rightGuessString);
+  }
+}
+
 // Keep track of queued messages
 const messageQueue = [];
 let isShowingMessage = false;
@@ -100,9 +121,17 @@ function showNextMessage() {
       // Show the next message in the queue
       showNextMessage();
     }, 300);
-  }, 2000); // Adjust the delay as per your preference
+  }, 1500); // Adjust the delay as per your preference
 
   isShowingMessage = true;
+}
+
+// Function to show the final message
+function showFinalMessage(message) {
+  const finalMessage = document.getElementById("final-message");
+  finalMessage.classList.remove("d-none");
+  finalMessage.classList.add("d-block");
+  finalMessage.textContent = message;
 }
 
 // Add an event listener for keydown event to stop showing messages
@@ -119,6 +148,7 @@ document.addEventListener("keyup", () => {
   isKeyPressed = false;
 });
 
+// Modify the checkGuess function
 function checkGuess() {
   const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
   const guessString = currentGuess.join("");
@@ -167,8 +197,12 @@ function checkGuess() {
   }
 
   if (guessString === rightGuessString) {
-    showMessage("You guessed right! Game over!");
-    guessesRemaining = 0;
+    // Show the win modal and update points
+    updatePoints();
+    showFinalMessage("You Win! 🏆");
+    setTimeout(() => {
+      showWinModal();
+    }, 2000);
     return;
   } else {
     guessesRemaining -= 1;
@@ -176,10 +210,56 @@ function checkGuess() {
     nextLetter = 0;
 
     if (guessesRemaining === 0) {
+      showFinalMessage("You Lost 😥");
       showMessage("You've run out of guesses! Game over!");
       showMessage(`The right word was: "${rightGuessString}"`);
     }
   }
+}
+
+// Function to show the win modal
+function showWinModal() {
+  const winModal = new bootstrap.Modal(document.getElementById("win-modal"));
+  winModal.show();
+}
+
+function showLoseModal(rightGuessString) {
+  const loseModal = new bootstrap.Modal(document.getElementById("lose-modal"));
+  const rightWordElement = document.getElementById("right-word");
+  rightWordElement.textContent = rightGuessString;
+  loseModal.show();
+}
+
+// Add event listener for restart button in modal
+document.querySelectorAll("#restart-button").forEach(button => {
+  button.addEventListener("click", () => {
+    // Reload the page to restart the game
+    location.reload();
+  });
+});
+
+
+// Function to update points
+function updatePoints() {
+  fetch("/update-points/", {
+    method: "POST",
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const newPoints = parseInt(data.points);
+        const pointsElements = document.querySelectorAll("#points-num");
+        pointsElements.forEach(element => {
+          element.textContent = newPoints;
+        });
+        console.log("Points updated successfully");
+      } else {
+        console.log("Failed to update points");
+      }
+    })
+    .catch(error => {
+      console.log("An error occurred while updating points:", error);
+    });
 }
 
 function insertLetter(pressedKey) {

@@ -5,24 +5,12 @@
 {% block body %}
 
 <article class="container md-4">
-    {% if message %}
-    <div>{{ message }}</div>
-    {% endif %}
-    {% if messages %}
-    <div class="alert alert-danger" role="alert">
-        <ul class="list-unstyled">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul> 
-    </div>
-{% endif %}
     {% if headlines %}
     <div id="articleCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             {% for article in headlines %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <h1 class="fw-bold fs-1 text-center text-uppercase mb-4">{% if search %} {{ search }} 
+                <h1 class="fw-bold fs-1 text-center text-uppercase mb-4">{% if search %} {{ search }}
                     {% elif article.category %}
                     <a class="text-reset text-decoration-none"
                         href="{% url 'view_category' category=article.category %}">
@@ -41,7 +29,7 @@
                         <div class="col-md-7 px-lg-5 py-lg-3">
                             <div class="card-body">
                                 <p class="card-text text-end"><small class="text-muted">
-                                    {{ article.date_published }}</small></p>
+                                        {{ article.date_published }}</small></p>
                                 <h2 class="card-title fw-bolder fs-1">{{ article.title }}</h2>
                                 <p class="card-text">{{ article.description }}</p>
                                 <a href="{% url 'view_article' id=article.id %}"

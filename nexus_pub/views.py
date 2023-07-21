@@ -227,25 +227,32 @@ def saved_articles(request):
 @login_required
 def edit_profile(request):
     user = request.user
-    
+
     if request.method == 'POST':
         # Get the form inputs from the request
         name = request.POST.get('name')
         username = request.POST.get('username')
         email = request.POST.get('email')
-        
-        # Update the user's data
-        if name:
-            user.name = name
-        if username:
-            user.username = username
-        if email:
-            user.email = email
-        user.save()
-        messages.success(request, 'Profile updated successfully.')
 
-        # Redirect the user to a success page or any other desired location
-        return redirect('index')
+        try:
+            # Update the user's data
+            if name:
+                user.name = name
+            if username:
+                user.username = username
+            if email:
+                user.email = email
+            user.save()
+            messages.success(request, 'Profile updated successfully.')
+
+            # Redirect the user to a success page or any other desired location
+            return redirect('index')
+
+        except IntegrityError as e:
+            # Handle the IntegrityError
+            messages.error(request, 'An error occurred while updating the profile. Please try again.')
+
+    return redirect('index')
 
 def games(request):
     return render(request, "games/games.html", {"games": True})
@@ -265,7 +272,6 @@ def update_points(request):
             "points": user.points,
         })
     return JsonResponse({"success": False})
-
 
 def login_view(request):
     if request.method == "POST":
