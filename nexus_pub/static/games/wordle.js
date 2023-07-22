@@ -38,18 +38,19 @@ function shadeKeyBoard(letter, color) {
   for (const elem of elements) {
     if (elem.textContent === letter) {
       const oldColor = elem.style.backgroundColor;
-      if (oldColor === "green" || (oldColor === "yellow" && color !== "green")) {
+      if (oldColor === "green" || (oldColor === "goldenrod" && color !== "green")) {
         return;
       }
 
       elem.style.backgroundColor = color;
+      elem.style.color = "white";
       break;
     }
   }
 }
 
 function deleteLetter() {
-  const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+  const row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
   const box = row.children[nextLetter - 1];
   box.textContent = "";
   box.classList.remove("filled-box");
@@ -62,7 +63,11 @@ document.addEventListener("DOMContentLoaded", function() {
   const finalMessageElement = document.getElementById("final-message");
   finalMessageElement.addEventListener("click", toggleModal);
 
-  // Rest of your DOMContentLoaded code here
+  document.getElementById("surrender").addEventListener("click", () => {
+    guessesRemaining = 0;
+    showFinalMessage("You Lost 😥");
+    showMessage(`The right word was: "${rightGuessString}"`);
+  });
 });
 
 
@@ -132,6 +137,10 @@ function showFinalMessage(message) {
   finalMessage.classList.remove("d-none");
   finalMessage.classList.add("d-block");
   finalMessage.textContent = message;
+
+  setTimeout(() => {
+    finalMessage.style.opacity = "1";
+  }, 10);
 }
 
 // Add an event listener for keydown event to stop showing messages
@@ -150,7 +159,7 @@ document.addEventListener("keyup", () => {
 
 // Modify the checkGuess function
 function checkGuess() {
-  const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+  const row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
   const guessString = currentGuess.join("");
   const rightGuess = Array.from(rightGuessString);
 
@@ -164,7 +173,7 @@ function checkGuess() {
     return;
   }
 
-  const letterColor = Array(5).fill("gray");
+  const letterColor = Array(5).fill("darkgray");
 
   // Check green
   for (let i = 0; i < WORD_LENGTH; i++) {
@@ -180,7 +189,7 @@ function checkGuess() {
 
     for (let j = 0; j < WORD_LENGTH; j++) {
       if (rightGuess[j] === currentGuess[i]) {
-        letterColor[i] = "yellow";
+        letterColor[i] = "goldenrod";
         rightGuess[j] = "#";
       }
     }
@@ -192,6 +201,8 @@ function checkGuess() {
     setTimeout(() => {
       animateCSS(box, "flipInX");
       box.style.backgroundColor = letterColor[i];
+      box.style.borderColor = letterColor[i];
+      box.style.color = "white";
       shadeKeyBoard(guessString.charAt(i), letterColor[i]);
     }, delay);
   }
@@ -200,6 +211,7 @@ function checkGuess() {
     // Show the win modal and update points
     updatePoints();
     showFinalMessage("You Win! 🏆");
+    triggerConfetti();
     setTimeout(() => {
       showWinModal();
     }, 2000);
@@ -218,9 +230,33 @@ function checkGuess() {
 }
 
 // Function to show the win modal
+// ... Your existing JavaScript code ...
+
+// Function to show the win modal and trigger the confetti animation
 function showWinModal() {
   const winModal = new bootstrap.Modal(document.getElementById("win-modal"));
   winModal.show();
+}
+
+// Function to trigger the confetti animation
+function triggerConfetti() {
+  const confettiSettings = {
+    target: "confetti-canvas",
+    max: 80,
+    size: 2,
+    animate: true,
+    props: ["circle", "square", "triangle", "line"],
+    colors: [
+      [165, 104, 246],
+      [230, 61, 135],
+      [0, 199, 228],
+      [253, 214, 126],
+    ],
+    clock: 25,
+  };
+
+  const confetti = new ConfettiGenerator(confettiSettings);
+  confetti.render();
 }
 
 function showLoseModal(rightGuessString) {
@@ -268,7 +304,14 @@ function insertLetter(pressedKey) {
   }
 
   pressedKey = pressedKey.toLowerCase();
-  const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+
+  const isLetter = /^[a-z]$/i.test(pressedKey);
+  
+  if (!isLetter) {
+    return; // Ignore non-letter keys
+  }
+
+  const row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
   const box = row.children[nextLetter];
   animateCSS(box, "pulse");
   box.textContent = pressedKey;

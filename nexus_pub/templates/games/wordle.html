@@ -8,91 +8,135 @@
 {% endblock %}
 {% block body %}
 <div class="container my-3">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
 
-    <div class="d-flex justify-content-center">
-        <div id="final-message" class="fw-bold rounded-pill border d-inline-block p-1 px-2 d-none"
-            onclick="toggleModal()"></div>
-    </div>
-
-    <h3 class="text-center py-2"> Classic Wordle </h3>
-
-    <div id="message" class="fw-bold fs-5 p-4 rounded"></div>
-    <div id="game-board">
-    </div>
-
-    <div id="keyboard-cont">
-        <div class="first-row">
-            <button class="keyboard-button">q</button>
-            <button class="keyboard-button">w</button>
-            <button class="keyboard-button">e</button>
-            <button class="keyboard-button">r</button>
-            <button class="keyboard-button">t</button>
-            <button class="keyboard-button">y</button>
-            <button class="keyboard-button">u</button>
-            <button class="keyboard-button">i</button>
-            <button class="keyboard-button">o</button>
-            <button class="keyboard-button">p</button>
-        </div>
-        <div class="second-row">
-            <button class="keyboard-button">a</button>
-            <button class="keyboard-button">s</button>
-            <button class="keyboard-button">d</button>
-            <button class="keyboard-button">f</button>
-            <button class="keyboard-button">g</button>
-            <button class="keyboard-button">h</button>
-            <button class="keyboard-button">j</button>
-            <button class="keyboard-button">k</button>
-            <button class="keyboard-button">l</button>
-        </div>
-        <div class="third-row">
-            <button class="keyboard-button">Del</button>
-            <button class="keyboard-button">z</button>
-            <button class="keyboard-button">x</button>
-            <button class="keyboard-button">c</button>
-            <button class="keyboard-button">v</button>
-            <button class="keyboard-button">b</button>
-            <button class="keyboard-button">n</button>
-            <button class="keyboard-button">m</button>
-            <button class="keyboard-button">Enter</button>
-        </div>
-    </div>
-
-    <!-- Add a modal element for the win message -->
-    <div id="win-modal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">You guessed right! Game over!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="wordle-menu d-flex justify-content-between">
+                <div>
+                    <button id="surrender" title="Surrender">
+                        <i class="bi bi-flag"></i>
+                    </button>
+                    <button id="restart-button" title="Restart">
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <p>Congratulations! You received a point.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="restart-button">Restart Game</button>
+                <div>
+                    <button title="Stats">
+                        <i class="bi bi-bar-chart"></i>
+                    </button>
+                    <button title="Settings">
+                        <i class="bi bi-gear"></i>
+                    </button>
+                    <button title="Help">
+                        <i class="bi bi-question-circle"></i>
+                    </button>
                 </div>
             </div>
-        </div>
-    </div>
+            <h3 class="text-center py-1 fw-bold">Classic Wordle </h3>
 
-    <div id="lose-modal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">You've run out of guesses! Game over!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="d-flex justify-content-center mb-1">
+                <div id="final-message" class="fw-bold rounded-pill border d-inline-block p-1 px-2 d-none ease"></div>
+            </div>
+
+            <div id="message" class="fw-bold fs-5 p-4 rounded"></div>
+
+            <div id="game-board">
+            </div>
+
+            <div id="keyboard-cont">
+                <div class="first-row">
+                    <button class="keyboard-button">q</button>
+                    <button class="keyboard-button">w</button>
+                    <button class="keyboard-button">e</button>
+                    <button class="keyboard-button">r</button>
+                    <button class="keyboard-button">t</button>
+                    <button class="keyboard-button">y</button>
+                    <button class="keyboard-button">u</button>
+                    <button class="keyboard-button">i</button>
+                    <button class="keyboard-button">o</button>
+                    <button class="keyboard-button">p</button>
                 </div>
-                <div class="modal-body">
-                    <p>The right word was: "<span id="right-word"></span>"</p>
+                <div class="second-row">
+                    <button class="keyboard-button">a</button>
+                    <button class="keyboard-button">s</button>
+                    <button class="keyboard-button">d</button>
+                    <button class="keyboard-button">f</button>
+                    <button class="keyboard-button">g</button>
+                    <button class="keyboard-button">h</button>
+                    <button class="keyboard-button">j</button>
+                    <button class="keyboard-button">k</button>
+                    <button class="keyboard-button">l</button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="restart-button">Restart Game</button>
+                <div class="third-row">
+                    <button class="keyboard-button">Del</button>
+                    <button class="keyboard-button">z</button>
+                    <button class="keyboard-button">x</button>
+                    <button class="keyboard-button">c</button>
+                    <button class="keyboard-button">v</button>
+                    <button class="keyboard-button">b</button>
+                    <button class="keyboard-button">n</button>
+                    <button class="keyboard-button">m</button>
+                    <button class="keyboard-button">Enter</button>
                 </div>
             </div>
+
+            <!-- Add a modal element for the win message -->
+            <div id="win-modal" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center">Congratulations! 🏆</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <div class="modal-body">
+                            <p>You guessed it right! You received a point, click the dashboard to see where your ranking is.</p>
+                        </div>
+                        {% else %}
+                        <div class="modal-body">
+                            <p>You guessed it right! Log in to receive a point and see your ranking among ather players.</p>
+                        </div>
+                        {% endif %}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="restart-button">Restart Game</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="lose-modal" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">You Lost! 😥</h5>
+                            <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>The right word was: 
+                                <span id="right-word" class="border-lg"></span>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="restart-button">Restart Game</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section id="stats">
+                <!-- Games played, game won, percent of wins -->
+            </section>
+
+            <section id="settings">
+                <!-- The users can modify how many guesses can they have. They can also choose five word, or four word, or six word.
+                And hopefully add a dark mode funtion. -->
+            </section>
         </div>
     </div>
 </div>
 
+<canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; pointer-events: none;"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/confetti-js/dist/index.js"></script>
 <script src="{% static 'games/wordle.js' %}" type="module" defer></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

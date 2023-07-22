@@ -1,4 +1,3 @@
-
 #game-board {
   display: flex;
   align-items: center;
@@ -6,12 +5,12 @@
 }
 
 .letter-box {
-  border: 2px solid gray;
-  border-radius: 3px;
+  border: 2px solid gainsboro;
+  border-radius: 5px;
   margin: 2px;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
-  height: 3rem;
+  height: 2.8rem;
   width: 3rem;
   display: flex;
   justify-content: center;
@@ -20,7 +19,7 @@
 }
 
 .filled-box {
-  border: 2px solid black;
+  border: 2px solid gray;
 }
 
 .letter-row {
@@ -36,6 +35,8 @@
 
 #keyboard-cont div {
   display: flex;
+  flex-direction: row;
+  justify-content: stretch;
 }
 
 .second-row {
@@ -43,12 +44,33 @@
 }
 
 .keyboard-button {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   padding: 0.5rem;
   margin: 0 2px;
   cursor: pointer;
   text-transform: uppercase;
+  border: 0;
+  background-color: gainsboro;
+  color: #495057;
+  border-radius: 5px;
+}
+
+@media screen and (min-width:576px) {
+  .keyboard-button{
+    padding: 0.8rem 1.1rem;
+  }
+
+  .letter-box{
+    height: 3.3rem;
+    width: 3.5rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .keyboard-button{
+    padding: 0.8rem 1.4rem;
+  }
 }
 
 /* Add the following CSS code */
@@ -62,6 +84,11 @@
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+#final-message {
+  opacity: 0; 
+  transition: opacity 0.3s ease;
 }
 
 /* Animation classes */
@@ -93,35 +120,20 @@
   animation: modal-fade-out 0.3s forwards;
 }
 
-/* Add styles for the modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+.wordle-menu button {
+  border: 0;
+  border-radius: 10px;
+  padding: 0 8px;
 }
 
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  width: 300px;
-  max-width: 80%;
-  text-align: center;
+.wordle-menu button:hover {
+  background-color: gainsboro;
 }
 
-.modal-content button {
-  margin-top: 20px;
+.wordle-menu button i{
+  font-size: 1.5rem;
+}
+
+.wordle-menu button i:hover{
+  color: darkgreen;
 }
