@@ -11,6 +11,108 @@ let nextLetter = 0;
 let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 console.log(rightGuessString);
 
+document.addEventListener("DOMContentLoaded", function() {
+
+  document.getElementById("surrender").addEventListener("click", () => {
+    guessesRemaining = 0;
+    showFinalMessage("You Lost 😥");
+    showMessage(`The right word was: "${rightGuessString}"`);
+  });
+
+  document.getElementById("final-message").addEventListener("click", () => {
+    const messageElement = document.getElementById("final-message");
+    const isWinMessage = messageElement.textContent.includes("You Win!");
+
+    if (isWinMessage) {
+      showWinModal();
+    } else {
+      showLoseModal(rightGuessString);
+    }
+  });
+
+  document.getElementById("stats-button").addEventListener("click", () => {
+    showSection("Stats");
+  });
+
+  document.getElementById("settings-button").addEventListener("click", () => {
+      showSection("Settings");
+  });
+
+  document.getElementById("help-button").addEventListener("click", () => {
+      showSection("Help");
+  });
+
+  document.getElementById("close-button").addEventListener("click", () => {
+    showSection("Game");
+  });
+
+
+  // Add event listener for restart button in modal
+  document.querySelectorAll("#restart-button").forEach(button => {
+    button.addEventListener("click", () => {
+      // Reload the page to restart the game
+      location.reload();
+    });
+  });
+
+});
+
+function showSection(sectionTitle) {
+  const menuTitle = document.getElementById("menu-title");
+  const gameSection = document.getElementById("game");
+  const statsSection = document.getElementById("stats");
+  const settingsSection = document.getElementById("settings");
+  const helpSection = document.getElementById("help");
+
+  const divTitle = document.getElementById("div-title");
+
+  divTitle.style.display = "block";
+
+  document.querySelectorAll(".wordle-menu button").forEach(button => {
+    if (button.title.toLowerCase() === sectionTitle.toLowerCase()) {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
+    }
+  });
+  
+
+  // Show/hide the respective div sections based on the selected button
+  switch (sectionTitle) {
+    case "Stats":
+      statsSection.style.display = "block";
+      settingsSection.style.display = "none";
+      helpSection.style.display = "none";
+      gameSection.style.display = "none";
+      break;
+    case "Settings":
+      statsSection.style.display = "none";
+      settingsSection.style.display = "block";
+      helpSection.style.display = "none";
+      gameSection.style.display = "none";
+      break;
+    case "Help":
+      statsSection.style.display = "none";
+      settingsSection.style.display = "none";
+      helpSection.style.display = "block";
+      gameSection.style.display = "none";
+      break;
+    default:
+      // If the default case is reached, hide all sections except the game section
+      statsSection.style.display = "none";
+      settingsSection.style.display = "none";
+      helpSection.style.display = "none";
+      gameSection.style.display = "block";
+      document.getElementById("stats-button").classList.remove("active");
+      document.getElementById("settings-button").classList.remove("active");
+      document.getElementById("help-button").classList.remove("active");
+      divTitle.style.display = "none";
+  }
+
+  menuTitle.textContent = sectionTitle;
+}
+
+
 // Create the board by the constant number of word length and guesses
 function initBoard() {
   const board = document.getElementById("game-board");
@@ -58,29 +160,6 @@ function deleteLetter() {
   nextLetter -= 1;
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  // Add the click event listener to the final-message element
-  const finalMessageElement = document.getElementById("final-message");
-  finalMessageElement.addEventListener("click", toggleModal);
-
-  document.getElementById("surrender").addEventListener("click", () => {
-    guessesRemaining = 0;
-    showFinalMessage("You Lost 😥");
-    showMessage(`The right word was: "${rightGuessString}"`);
-  });
-});
-
-
-function toggleModal() {
-  const messageElement = document.getElementById("final-message");
-  const isWinMessage = messageElement.textContent.includes("You Win!");
-
-  if (isWinMessage) {
-    showWinModal();
-  } else {
-    showLoseModal(rightGuessString);
-  }
-}
 
 // Keep track of queued messages
 const messageQueue = [];
@@ -252,7 +331,7 @@ function triggerConfetti() {
       [0, 199, 228],
       [253, 214, 126],
     ],
-    clock: 25,
+    clock: 50,
   };
 
   const confetti = new ConfettiGenerator(confettiSettings);
@@ -265,15 +344,6 @@ function showLoseModal(rightGuessString) {
   rightWordElement.textContent = rightGuessString;
   loseModal.show();
 }
-
-// Add event listener for restart button in modal
-document.querySelectorAll("#restart-button").forEach(button => {
-  button.addEventListener("click", () => {
-    // Reload the page to restart the game
-    location.reload();
-  });
-});
-
 
 // Function to update points
 function updatePoints() {

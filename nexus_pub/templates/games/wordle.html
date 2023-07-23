@@ -21,66 +21,146 @@
                     </button>
                 </div>
                 <div>
-                    <button title="Stats">
+                    <button title="Stats" id="stats-button">
                         <i class="bi bi-bar-chart"></i>
                     </button>
-                    <button title="Settings">
+                    <button title="Settings" id="settings-button">
                         <i class="bi bi-gear"></i>
                     </button>
-                    <button title="Help">
+                    <button title="Help" id="help-button">
                         <i class="bi bi-question-circle"></i>
                     </button>
                 </div>
             </div>
-            <h3 class="text-center py-1 fw-bold">Classic Wordle </h3>
 
-            <div class="d-flex justify-content-center mb-1">
-                <div id="final-message" class="fw-bold rounded-pill border d-inline-block p-1 px-2 d-none ease"></div>
-            </div>
+            <section id="game">
+                <h3 class="text-center py-1 fw-bold">Classic Wordle </h3>
 
-            <div id="message" class="fw-bold fs-5 p-4 rounded"></div>
-
-            <div id="game-board">
-            </div>
-
-            <div id="keyboard-cont">
-                <div class="first-row">
-                    <button class="keyboard-button">q</button>
-                    <button class="keyboard-button">w</button>
-                    <button class="keyboard-button">e</button>
-                    <button class="keyboard-button">r</button>
-                    <button class="keyboard-button">t</button>
-                    <button class="keyboard-button">y</button>
-                    <button class="keyboard-button">u</button>
-                    <button class="keyboard-button">i</button>
-                    <button class="keyboard-button">o</button>
-                    <button class="keyboard-button">p</button>
+                <div class="d-flex justify-content-center mb-1">
+                    <div id="final-message" class="fw-bold rounded-pill border d-inline-block p-1 px-2 d-none ease">
+                    </div>
                 </div>
-                <div class="second-row">
-                    <button class="keyboard-button">a</button>
-                    <button class="keyboard-button">s</button>
-                    <button class="keyboard-button">d</button>
-                    <button class="keyboard-button">f</button>
-                    <button class="keyboard-button">g</button>
-                    <button class="keyboard-button">h</button>
-                    <button class="keyboard-button">j</button>
-                    <button class="keyboard-button">k</button>
-                    <button class="keyboard-button">l</button>
-                </div>
-                <div class="third-row">
-                    <button class="keyboard-button">Del</button>
-                    <button class="keyboard-button">z</button>
-                    <button class="keyboard-button">x</button>
-                    <button class="keyboard-button">c</button>
-                    <button class="keyboard-button">v</button>
-                    <button class="keyboard-button">b</button>
-                    <button class="keyboard-button">n</button>
-                    <button class="keyboard-button">m</button>
-                    <button class="keyboard-button">Enter</button>
-                </div>
-            </div>
 
-            <!-- Add a modal element for the win message -->
+                <div id="message" class="fw-bold fs-5 p-4 rounded"></div>
+
+                <div id="game-board">
+                </div>
+
+                <div id="keyboard-cont">
+                    <div class="first-row">
+                        <button class="keyboard-button">q</button>
+                        <button class="keyboard-button">w</button>
+                        <button class="keyboard-button">e</button>
+                        <button class="keyboard-button">r</button>
+                        <button class="keyboard-button">t</button>
+                        <button class="keyboard-button">y</button>
+                        <button class="keyboard-button">u</button>
+                        <button class="keyboard-button">i</button>
+                        <button class="keyboard-button">o</button>
+                        <button class="keyboard-button">p</button>
+                    </div>
+                    <div class="second-row">
+                        <button class="keyboard-button">a</button>
+                        <button class="keyboard-button">s</button>
+                        <button class="keyboard-button">d</button>
+                        <button class="keyboard-button">f</button>
+                        <button class="keyboard-button">g</button>
+                        <button class="keyboard-button">h</button>
+                        <button class="keyboard-button">j</button>
+                        <button class="keyboard-button">k</button>
+                        <button class="keyboard-button">l</button>
+                    </div>
+                    <div class="third-row">
+                        <button class="keyboard-button">Del</button>
+                        <button class="keyboard-button">z</button>
+                        <button class="keyboard-button">x</button>
+                        <button class="keyboard-button">c</button>
+                        <button class="keyboard-button">v</button>
+                        <button class="keyboard-button">b</button>
+                        <button class="keyboard-button">n</button>
+                        <button class="keyboard-button">m</button>
+                        <button class="keyboard-button">Enter</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="menu" class="">
+                <div class="title my-3" id="div-title">
+                    <span class="fs-5 fw-bold" id="menu-title"></span>
+                    <button type="button" class="btn-close shadow-none" id="close-button"></button>
+                </div>
+
+                <div id="stats" class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="stats-card">
+                                <span>0</span>
+                                <p>🎮 Games Played</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stats-card">
+                                <span>0</span>
+                                <p>🏆 Games Won</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div  class="stats-card">
+                                <span>0</span>
+                                <p>👌 % of Wins</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="settings">
+                    <div class="mb-3">
+                    <label for="word-length" class="form-label">Choose Word Length:</label>
+                    <select class="form-select" id="word-length">
+                      <option value="4">Easy (4-letter words)</option>
+                      <option value="5" selected>Normal (5-letter words)</option>
+                      <option value="6">Hard (6-letter words)</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="guesses" class="form-label">Number of Guesses:</label>
+                    <input type="number" class="form-control" id="guesses" value="6" min="1">
+                  </div>
+                  <button type="button" class="btn btn-primary" id="apply-settings">Apply Settings</button>
+                
+                </div>
+
+                <div id="help">
+                        <div class="content">
+                          <h5 class="fw-bold">How to Play Wordle</h5>
+                          <ol>
+                            <li>Wordle is a word puzzle game where you need to guess a five-letter word within six attempts.</li>
+                            <li>Each guess will be evaluated and colored to give you feedback on how close you are to the correct word.</li>
+                            <li>The colors indicate the following:</li>
+                            <ul>
+                              <li><span style="color: green;">Green</span> - Correct letter in the correct position.</li>
+                              <li><span style="color: gold;">Gold</span> - Correct letter, but in the wrong position.</li>
+                              <li><span style="color: darkgray;">Gray</span> - Incorrect letter.</li>
+                            </ul>
+                            <li>Use the on-screen keyboard or your actual keyboard to make your guesses.</li>
+                            <li>Press Enter to submit your guess.</li>
+                            <li>If you need to delete a letter, you can use the Backspace key or the on-screen delete button.</li>
+                            <li>If you've run out of guesses and have not guessed the correct word, the game ends.</li>
+                            <li>If you guess the correct word, you win the game!</li>
+                          </ol>
+                          <h5 class="fw-bold">Tips</h5>
+                          <ul>
+                            <li>Start by guessing common five-letter words to get feedback on the positions of letters.</li>
+                            <li>Use the feedback to eliminate letters that do not appear in the correct word.</li>
+                            <li>Keep trying different combinations of letters until you find the correct word.</li>
+                            <li>Pay attention to the feedback colors to make educated guesses.</li>
+                            <li>Have fun and enjoy the challenge!</li>
+                          </ul>
+                      
+                </div>
+            </section>
+
+            <!-- Modal element for the win message -->
             <div id="win-modal" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -90,11 +170,13 @@
                         </div>
                         {% if user.is_authenticated %}
                         <div class="modal-body">
-                            <p>You guessed it right! You received a point, click the dashboard to see where your ranking is.</p>
+                            <p>You guessed it right! You received a point, click the dashboard to see where your ranking
+                                is.</p>
                         </div>
                         {% else %}
                         <div class="modal-body">
-                            <p>You guessed it right! Log in to receive a point and see your ranking among ather players.</p>
+                            <p>You guessed it right! Log in to receive a point and see your ranking among ather players.
+                            </p>
                         </div>
                         {% endif %}
                         <div class="modal-footer">
@@ -104,15 +186,17 @@
                 </div>
             </div>
 
+            <!-- Modal element for the lose message -->
             <div id="lose-modal" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">You Lost! 😥</h5>
-                            <button type="button" class="btn-close float-right" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close float-right" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>The right word was: 
+                            <p>The right word was:
                                 <span id="right-word" class="border-lg"></span>
                             </p>
                         </div>
@@ -123,14 +207,6 @@
                 </div>
             </div>
 
-            <section id="stats">
-                <!-- Games played, game won, percent of wins -->
-            </section>
-
-            <section id="settings">
-                <!-- The users can modify how many guesses can they have. They can also choose five word, or four word, or six word.
-                And hopefully add a dark mode funtion. -->
-            </section>
         </div>
     </div>
 </div>

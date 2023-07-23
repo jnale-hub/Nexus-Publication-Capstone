@@ -134,6 +134,49 @@
   font-size: 1.5rem;
 }
 
-.wordle-menu button i:hover{
+.wordle-menu button:hover{
   color: darkgreen;
+}
+
+.active {
+  color: darkgreen;
+  background-color: gainsboro;
+}
+
+#stats, #settings, #help, #div-title{
+  display: none;
+}
+
+#menu .title{
+  padding: .3rem;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #e7e7e7;
+}
+
+#stats .row {
+  --bs-gutter-x: 2% !important;
+}
+.stats-card {
+  padding: .1rem;
+  text-align: center;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  height: 100%;
+}
+
+.stats-card span {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.stats-card p {
+  text-transform: uppercase;
+  font-size: smaller;
+  color: gray;
+}
+
+#close-button {
+  float: right;
+  margin: .3rem;
 }

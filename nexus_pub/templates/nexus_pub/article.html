@@ -62,11 +62,12 @@
     </div>
 </article>
 
-{% if user.is_authenticated %}
+
 <div class="bg-light py-5">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
+                {% if user.is_authenticated %}
                 <p class="fw-bold fs-5">{{ comments.all|length }} Comments to "{{ article.title}}"</p>
                 {% if comments %}
                 <a id="toggle-comments" class="mb-3">View Comments</a>
@@ -108,10 +109,9 @@
 
                 <a data-bs-toggle="modal" data-bs-target="#loginModal" class="py-3">Log in to View Comments.</a>
 
+                {% endif %}
             </div>
         </div>
-
     </div>
-    {% endif %}
 </div>
 {% endblock %}
