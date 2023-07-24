@@ -3,6 +3,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'games/wordle.css' %}">
+<script src="{% static 'games/main.js' %}" type="module"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 {% endblock %}
@@ -213,7 +214,6 @@
 
 <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; pointer-events: none;"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/confetti-js/dist/index.js"></script>
-<script src="{% static 'games/wordle.js' %}" type="module" defer></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
