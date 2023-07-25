@@ -1,6 +1,5 @@
 // ui.js
 
-
 // Function to show the final message when the game is over
 export function showFinalMessage(message) {
     const finalMessage = document.getElementById("final-message");
@@ -171,35 +170,6 @@ document.addEventListener("keydown", () => {
 document.addEventListener("keyup", () => {
     isKeyPressed = false;
 });
-
-// function applySettings() {
-//   const wordLengthSelect = document.getElementById("word-length");
-//   const guessesInput = document.getElementById("guesses");
-
-//   // Get the selected word length and number of guesses
-//   const wordLength = parseInt(wordLengthSelect.value);
-//   const guesses = parseInt(guessesInput.value);
-
-//   // Apply the settings to the game
-//   setWordLength(wordLength);
-//   setNumberOfGuesses(guesses);
-
-//   // Close the settings section
-//   showSection("Close");
-// }
-
-// function setWordLength(wordLength) {
-//   WORD_LENGTH = wordLength;
-//   location.reload(); // Re-initialize the game board with the new word length
-// }
-
-// function setNumberOfGuesses(guesses) {
-//   NUMBER_OF_GUESSES = guesses;
-// }
-// Keep track of queued messages
-
-
-// Function to show the win modal and trigger the confetti animation
 
 export function showWinModal() {
     const winModal = new bootstrap.Modal(document.getElementById("win-modal"));
