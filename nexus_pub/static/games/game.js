@@ -8,7 +8,6 @@ let NUMBER_OF_GUESSES = 6;
 let WORD_LENGTH = 5;
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
-let nextLetter = 0;
 
 // Set a random word to be guessed
 export let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
@@ -108,7 +107,6 @@ function checkGuess() {
   } else {
     guessesRemaining -= 1;
     currentGuess = [];
-    nextLetter = 0;
 
     if (guessesRemaining === 0) {
       showFinalMessage("You Lost 😥");
@@ -121,16 +119,15 @@ function checkGuess() {
 // Function to delete a letter from the current guess
 function deleteLetter() {
   const row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
-  const box = row.children[nextLetter - 1];
+  const box = row.children[currentGuess.length - 1];
   box.textContent = "";
   box.classList.remove("filled-box");
   currentGuess.pop();
-  nextLetter -= 1;
 }
 
 // Function to insert a letter into the current guess
 function insertLetter(pressedKey) {
-  if (nextLetter === 5) {
+  if (currentGuess.length === WORD_LENGTH) {
     return;
   }
 
@@ -143,12 +140,11 @@ function insertLetter(pressedKey) {
   }
 
   const row = document.getElementsByClassName("letter-row")[NUMBER_OF_GUESSES - guessesRemaining];
-  const box = row.children[nextLetter];
+  const box = row.children[currentGuess.length];
   animateCSS(box, "pulse");
   box.textContent = pressedKey;
   box.classList.add("filled-box");
   currentGuess.push(pressedKey);
-  nextLetter += 1;
 }
 
 // Function to update the player's points after winning a game
@@ -166,7 +162,7 @@ function updatePoints() {
         });
         console.log("Points updated successfully");
       } else {
-        console.log("Failed to update points");
+        console.log("Failed to update points. Server responded with:", data);
       }
     })
     .catch(error => {
@@ -184,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const pressedKey = String(e.key);
 
-    if (pressedKey === "Backspace" && nextLetter !== 0) {
+    if (pressedKey === "Backspace" && currentGuess.length !== 0) {
       deleteLetter();
       return;
     }
@@ -203,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Function to handle clicks on the virtual keyboard
+  // Handle clicks on the virtual keyboard
   document.getElementById("keyboard-cont").addEventListener("click", (e) => {
     const target = e.target;
 
@@ -221,3 +217,28 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 });
+
+function applySettings() {
+  const wordLengthSelect = document.getElementById("word-length");
+  const guessesInput = document.getElementById("guesses");
+
+  // Get the selected word length and number of guesses
+  const wordLength = parseInt(wordLengthSelect.value);
+  const guesses = parseInt(guessesInput.value);
+
+  // Apply the settings to the game
+  setWordLength(wordLength);
+  setNumberOfGuesses(guesses);
+
+  // Close the settings section
+  showSection("Close");
+}
+
+function setWordLength(wordLength) {
+  WORD_LENGTH = wordLength;
+  location.reload(); // Re-initialize the game board with the new word length
+}
+
+function setNumberOfGuesses(guesses) {
+  NUMBER_OF_GUESSES = guesses;
+}
