@@ -134,7 +134,7 @@ function insertLetter(pressedKey) {
   pressedKey = pressedKey.toLowerCase();
 
   const isLetter = /^[a-z]$/i.test(pressedKey);
-  
+
   if (!isLetter) {
     return; // Ignore non-letter keys
   }
@@ -170,7 +170,7 @@ function updatePoints() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
   // Function to handle keyboard input
   document.addEventListener("keyup", (e) => {
