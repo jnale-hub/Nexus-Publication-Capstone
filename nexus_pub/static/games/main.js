@@ -1,8 +1,12 @@
+// main.js
+
 import { initBoard, abortGame, rightGuessString } from "./game.js"
 import { showFinalMessage, showLoseModal,showWinModal, showSection, showMessage } from "./ui.js"
 
 document.addEventListener("DOMContentLoaded", function() {
 
+  const menuButtons = document.querySelectorAll(".wordle-menu button");
+  
   // Event listener to surrender and abort the game
   document.getElementById("surrender").addEventListener("click", () => {
     const messageElement = document.getElementById("final-message");
@@ -28,20 +32,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  document.getElementById("stats-button").addEventListener("click", () => {
-    showSection("Stats");
-  });
-
-  document.getElementById("settings-button").addEventListener("click", () => {
-    showSection("Settings");
+  // Handle clicks on menu buttons
+  menuButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const sectionTitle = button.title;
+      showSection(sectionTitle);
+    });
   });
 
   document.getElementById("apply-settings").addEventListener("click", () => {
     applySettings();
-  });
-
-  document.getElementById("help-button").addEventListener("click", () => {
-    showSection("Help");
   });
 
   document.getElementById("close-button").addEventListener("click", () => {
