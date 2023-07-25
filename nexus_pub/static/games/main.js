@@ -1,12 +1,12 @@
 // main.js
 
 import { initBoard, abortGame, rightGuessString } from "./game.js"
-import { showFinalMessage, showLoseModal,showWinModal, showSection, showMessage } from "./ui.js"
+import { showFinalMessage, showLoseModal, showWinModal, showSection, showMessage } from "./ui.js"
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
   const menuButtons = document.querySelectorAll(".wordle-menu button");
-  
+
   // Event listener to surrender and abort the game
   document.getElementById("surrender").addEventListener("click", () => {
     const messageElement = document.getElementById("final-message");
