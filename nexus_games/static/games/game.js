@@ -98,11 +98,14 @@ function checkGuess() {
   if (guessString === rightGuessString) {
     // Show the win modal and update points
     updatePoints();
+    updateStats(true);
     showFinalMessage("You Won! 🏆");
     triggerConfetti();
+
     setTimeout(() => {
       showWinModal();
     }, 2000);
+
     return;
   } else {
     guessesRemaining -= 1;
@@ -112,6 +115,7 @@ function checkGuess() {
       showFinalMessage("You Lost 😥");
       showMessage("You've run out of guesses! Game over!");
       showMessage(`The right word was: "${rightGuessString}"`);
+      updateStats(false);
     }
   }
 }
@@ -170,28 +174,44 @@ function updatePoints() {
     });
 }
 
-// Function to update the player's points after winning a game
-function updateStats(isWin) {
-  fetch("/games/update-stats/", {
+// Function to update the player's stats after winning a game
+export function updateStats(isWin) {
+
+  // Convert the boolean isWin to a string representation "true" or "false"
+  const isWinString = isWin ? "true" : "false";
+
+  fetch(`/games/update-stats/${isWinString}/`, {
     method: "POST",
   })
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        const newPoints = parseInt(data.points);
-        const pointsElements = document.querySelectorAll("#points-num");
-        pointsElements.forEach(element => {
-          element.textContent = newPoints;
-        });
-        console.log("Stats updated successfully");
+
+        const gamesPlayed = parseInt(data.games_played);
+        const gamesWon = parseInt(data.games_won);
+        const percentWins = parseInt(data.percentage_wins);
+
+        // Update the DOM elements with the new statistics
+        const playedElement = document.querySelector("#played_num");
+        const wonElement = document.querySelector("#won_num");
+        const percentElement = document.querySelector("#percent_num");
+
+        console.log("Elements:", playedElement, wonElement, percentElement);
+        playedElement.textContent = gamesPlayed;
+        wonElement.textContent = gamesWon;
+        percentElement.textContent = percentWins;
+
+        console.log("Stats updated successfully:", data);
+
       } else {
         console.log("Failed to update stats. Server responded with:", data);
       }
     })
     .catch(error => {
-      console.log("An error occurred while updating points:", error);
+      console.log("An error occurred while updating stats:", error);
     });
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
 

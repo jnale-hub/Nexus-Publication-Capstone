@@ -3,7 +3,6 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'games/wordle.css' %}">
-<script src="{% static 'games/main.js' %}" type="module"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 {% endblock %}
@@ -35,7 +34,7 @@
             </div>
 
             <section id="game">
-                <h3 class="text-center py-1 fw-bold">Classic Wordle </h3>
+                <h3 class="text-center py-1 fw-bold" id="game-title">Classic Wordle </h3>
 
                 <div class="d-flex justify-content-center mb-1">
                     <div id="final-message" class="fw-bold rounded-pill border d-inline-block p-1 px-2 d-none ease">
@@ -95,19 +94,19 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="stats-card">
-                                <span>{{ games_played }}</span>
+                                <span id="played_num">{{ games_played }}</span>
                                 <p>🎮 Games Played</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stats-card">
-                                <span>{{ games_won }}</span>
+                                <span id="won_num">{{ games_won }}</span>
                                 <p>🏆 Games Won</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stats-card">
-                                <span>{{ percentage_wins }}%</span>
+                                <span id="percent_num">{{ percentage_wins|floatformat:"1" }}%</span>
                                 <p>👌 % of Wins</p>
                             </div>
                         </div>
@@ -209,6 +208,7 @@
     </div>
 </div>
 
+<script src="{% static 'games/main.js' %}" type="module"></script>
 <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; pointer-events: none;"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/confetti-js/dist/index.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"

@@ -1,6 +1,6 @@
 // main.js
 
-import { initBoard, abortGame, rightGuessString } from "./game.js"
+import { initBoard, abortGame, rightGuessString, updateStats } from "./game.js"
 import { showFinalMessage, showLoseModal, showWinModal, showSection, showMessage } from "./ui.js"
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       abortGame();
       showFinalMessage("You Lost 😥");
       showMessage(`The right word was: "${rightGuessString}"`);
+      updateStats(false);
     } else {
       showMessage(`You already won the game! Dumbass!`);
     }
