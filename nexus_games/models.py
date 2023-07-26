@@ -1,13 +1,8 @@
-# from django.contrib.auth.models import AbstractUser
-# from django.db import models
+from django.db import models
+from nexus_pub.models import User
 
-
-# class User(AbstractUser):
-#     pass
-
-# class Game(models.Model):
-#     title = models.CharField(max_length=255)
-#     description = models.TextField()
-
-#     def __str__(self):
-#         return self.title
+class GameResult(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    points = models.IntegerField(default=0)
+    wordle_played = models.IntegerField(default=0)
+    wordle_won = models.IntegerField(default=0)

@@ -16,7 +16,4 @@ urlpatterns = [
     path('starred_articles/', views.starred_articles, name='starred_articles'),
     path('saved_articles/', views.saved_articles, name='saved_articles'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
-    path('games/wordle', views.wordle, name='wordle'),
-    path('games/', views.games, name='games'),
-    path('update-points/', views.update_points, name='update_points'),
 ]

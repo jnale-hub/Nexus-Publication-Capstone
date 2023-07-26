@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'world_news',
     'nexus_pub',
+    'nexus_games',
     'bootstrap5',
 ]
 

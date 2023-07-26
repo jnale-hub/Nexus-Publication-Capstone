@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} Nexus Publication</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link href="{% static 'nexus_pub/styles.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/7553/7553719.png">
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light py-3 border-bottom align-items-center mb-4 mb-lg-0">
+        <div class="container">
+            <a class="navbar-brand fw-bolder fs-5" href="{% url 'index' %}">Nexus Games</a>
+            <div class="d-flex align-items-center">
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="nav-link d-flex align-items-center d-md-none" title="{{ user.name }}">
+                    <div class="ratio ratio-1x1 mx-md-2 me-3 mt-1" style="width: 28px; height: 28px;">
+                        <img src="{{ user.picture }}" alt="{{ user.name }}" class="rounded-circle"
+                            style="object-fit: cover;">
+                    </div>
+                    <div class="text-capitalize d-none d-lg-block pe-3"><span class="">{{ user.name }}</span></div>
+                    <div class="badge bg-primary fw-bold p-2"><span id="points-num">{{ user.points }}</span> Points
+                    </div>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav justify-content-between">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}"><i class="bi bi-house pe-2"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'world_news' %}"><i class="bi bi-globe pe-2"></i>World News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'games' %}"><i class="bi bi-table pe-2"></i>Games</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown d-none d-md-block my-auto">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="ratio ratio-1x1 ms-2" style="width: 28px; height: 28px;">
+                                <img src="{{ user.picture }}" alt="{{ user.name }}" class="img-fluid rounded-circle"
+                                    style="object-fit: cover;">
+                            </div>
+                            <a class="nav-link dropdown-toggle text-capitalize d-flex align-items-center" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false"><span class="d-lg-block d-none">{{ user.name }}</span>
+                            </a>
+                            {% include 'nexus_pub/profile-dropdown.html' %}
+                            <div class="badge bg-primary fw-bold p-2"><span id="points-num">{{ user.points }}</span>
+                                Points</div>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal"><i
+                                class="bi bi-pen pe-2"></i>Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal"><i
+                                class="bi bi-person pe-2"></i>Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        {% block body %}
+
+        {% endblock %}
+    </main>
+
+    {% include 'nexus_pub/modals.html' %}
+</body>
+
+</html>

@@ -95,40 +95,37 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="stats-card">
-                                <span>0</span>
+                                <span>{{ games_played }}</span>
                                 <p>🎮 Games Played</p>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="stats-card">
-                                <span>0</span>
+                                <span>{{ games_won }}</span>
                                 <p>🏆 Games Won</p>
                             </div>
                         </div>
                         <div class="col-4">
-                            <div  class="stats-card">
-                                <span>0</span>
+                            <div class="stats-card">
+                                <span>{{ percentage_wins }}%</span>
                                 <p>👌 % of Wins</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                
 
                 <div id="settings">
                     <div class="mb-3">
                     <label for="word-length" class="form-label">Choose Word Length:</label>
                     <select class="form-select" id="word-length">
-                      <option value="4">Easy (4-letter words)</option>
-                      <option value="5" selected>Normal (5-letter words)</option>
-                      <option value="6">Hard (6-letter words)</option>
+                      <option value="8">Easy (8 Available Guesses)</option>
+                      <option value="6" selected>Normal (6 Available Guesses)</option>
+                      <option value="5">Hard (5 Available Guesses )</option>
                     </select>
                   </div>
-                  <div class="mb-3">
-                    <label for="guesses" class="form-label">Number of Guesses:</label>
-                    <input type="number" class="form-control" id="guesses" value="6" min="1">
-                  </div>
                   <button type="button" class="btn btn-primary" id="apply-settings">Apply Settings</button>
-                
+
                 </div>
 
                 <div id="help">

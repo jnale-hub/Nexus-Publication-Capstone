@@ -1,7 +1,8 @@
 from django.urls import path
-from nexus_games import views
+from . import views
 
 urlpatterns = [
-    # path('', views.index, name="games"),
-    # path("wordle", views.wordle, name="wordle")
+    path('', views.games, name='games'),
+    path('wordle/', views.wordle, name='wordle'),
+    path('update-points/', views.update_points, name='update_points'),
 ]

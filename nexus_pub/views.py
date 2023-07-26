@@ -50,8 +50,6 @@ def index(request):
     }
     return render(request, 'nexus_pub/index.html', context)
 
-
-
 def view_article(request, id):
     article = get_object_or_404(Article, pk=id)
     comments = Comment.objects.filter(article=article)
@@ -96,8 +94,6 @@ def view_staff(request, name):
         "page_obj": page_obj,
     }
     return render(request, 'nexus_pub/staff.html', context)
-
-
 
 def search(request):
     query = request.GET.get('q')
@@ -254,25 +250,6 @@ def edit_profile(request):
 
     return redirect('index')
 
-def games(request):
-    return render(request, "games/games.html", {"games": True})
-
-def wordle(request):
-    return render(request, "games/wordle.html")
-
-@csrf_exempt
-@login_required
-def update_points(request):
-    if request.method == "POST":
-        user = request.user
-        user.points += 1
-        user.save()
-        return JsonResponse({
-            "success": True,
-            "points": user.points,
-        })
-    return JsonResponse({"success": False})
-
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -292,7 +269,6 @@ def login_view(request):
             })
     else:
         return render(request, "nexus_pub/index.html")
-
 
 def logout_view(request):
     logout(request)
