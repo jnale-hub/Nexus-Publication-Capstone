@@ -26,6 +26,8 @@ School Publication website that can cater articles, search for world news, and p
     const playedElement = document.querySelector("#games-played");
     ```
 
-    it keeps giving me null value, and then after half an hour, i just realized that the whole stats's display is none. console.log() really help me debugging this.
+    it keeps giving me null value, and then after half an hour, ~~i just realized that the whole stats's display is none.~~ console.log() really help me debugging this. Edit: That's wrong, even if the style is none, querySelector does get it still, the main problem was the name of the variable (maybe I used it too much, dunno), I tried everything I even changed the variable name to #buday and then I get it, I changed the ids and voila, it works now.
+
+    ```const playedElement = document.querySelector("#played-num");```
 
 - 
