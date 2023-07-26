@@ -149,7 +149,7 @@ function insertLetter(pressedKey) {
 
 // Function to update the player's points after winning a game
 function updatePoints() {
-  fetch("/update-points/", {
+  fetch("/games/update-points/", {
     method: "POST",
   })
     .then(response => response.json())
@@ -163,6 +163,29 @@ function updatePoints() {
         console.log("Points updated successfully");
       } else {
         console.log("Failed to update points. Server responded with:", data);
+      }
+    })
+    .catch(error => {
+      console.log("An error occurred while updating points:", error);
+    });
+}
+
+// Function to update the player's points after winning a game
+function updateStats(isWin) {
+  fetch("/games/update-stats/", {
+    method: "POST",
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const newPoints = parseInt(data.points);
+        const pointsElements = document.querySelectorAll("#points-num");
+        pointsElements.forEach(element => {
+          element.textContent = newPoints;
+        });
+        console.log("Stats updated successfully");
+      } else {
+        console.log("Failed to update stats. Server responded with:", data);
       }
     })
     .catch(error => {

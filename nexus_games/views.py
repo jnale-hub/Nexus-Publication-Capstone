@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-
-from nexus_pub.models import User
+from django.db.models import F
+from django.http import JsonResponse
 from .models import GameResult
+from nexus_pub.models import User
 
 def games(request):
     return render(request, "games/games.html", {"games": True})
