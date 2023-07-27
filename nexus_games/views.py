@@ -15,7 +15,9 @@ def games(request):
 @login_required
 def wordle(request):
     user = request.user
-    game_result = GameResult.objects.get(user=user)
+
+    # Try to get the user's existing GameResult or create a new one with default values
+    game_result, created = GameResult.objects.get_or_create(user=user, defaults={'wordle_played': 0, 'wordle_won': 0})
     
     games_played = game_result.wordle_played
     games_won = game_result.wordle_won
@@ -23,10 +25,14 @@ def wordle(request):
     # Calculate percentage_wins (avoid division by zero)
     percentage_wins = (games_won * 100) / games_played if games_played > 0 else 0
 
+    # Get the top 5 users with the highest number of games won
+    top_users = GameResult.objects.order_by('-wordle_won')[:5]
+
     return render(request, "games/wordle.html", {
         'games_played': games_played,
         'games_won': games_won,
         'percentage_wins': percentage_wins,
+        'top_users': top_users,
     })
 
 @csrf_exempt
