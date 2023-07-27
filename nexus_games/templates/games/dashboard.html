@@ -1,0 +1,33 @@
+<div class="title my-3 bg-primary light">
+    <span class="fs-5 fw-bold text-white">Wordle User Ranking</span>
+</div>
+<div>
+    {% for user_result in top_users %}
+    <div class="row border align-items-center p-2">
+        <div class="col-6">
+            <div class="d-flex align-items-center">
+                <div class="ratio ratio-1x1 ms-2" style="width: 28px; height: 28px;">
+                  <img src="{{ user_result.user.picture }}" alt="{{ user_result.user }}" class="img-fluid rounded-circle" style="object-fit: cover;">
+                </div>
+                <div class="ps-2">
+                  {{ user_result.user }}
+                </div>
+              </div>
+        </div>
+        <div class="col-4 fw-bold">
+            {{ user_result.wordle_won }} Total Points
+        </div>
+        <div class="col-2">
+            {% if forloop.counter == 1 %}
+                    1st
+                {% elif forloop.counter == 2 %}
+                    2nd
+                {% elif forloop.counter == 3 %}
+                    3rd
+                {% else %}
+                    {{ forloop.counter }}th
+                {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

@@ -21,7 +21,7 @@
                     </button>
                 </div>
                 <div>
-                    <button title="Stats" id="stats-button">
+                    <button title="Statistics" id="stats-button">
                         <i class="bi bi-bar-chart"></i>
                     </button>
                     <button title="Settings" id="settings-button">
@@ -90,8 +90,8 @@
                     <button type="button" class="btn-close shadow-none" id="close-button"></button>
                 </div>
 
-                <div id="stats" class="container">
-                    <div class="row">
+                <div id="stats" class="">
+                    <div class="row container">
                         <div class="col-4">
                             <div class="stats-card">
                                 <span id="played_num">{{ games_played }}</span>
@@ -111,8 +111,13 @@
                             </div>
                         </div>
                     </div>
+
+                    <div>
+                        {% include './dashboard.html' %}
+                    </div>
+
                 </div>
-                
+
 
                 <div id="settings">
                     <div class="mb-3">
