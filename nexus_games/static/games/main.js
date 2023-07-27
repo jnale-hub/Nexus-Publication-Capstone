@@ -63,6 +63,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  document.getElementById("ranks-restart").addEventListener("click", () => {
+    // Set a flag in local storage to indicate that the "Statistics" section should be shown after the reload
+    localStorage.setItem("showStatistics", "true");
+    
+    // Reload the page
+    location.reload();
+  });
+
+  const showStatisticsFlag = localStorage.getItem("showStatistics");
+  
+  if (showStatisticsFlag === "true") {
+    // Show the "Statistics" section (if applicable)
+    showSection("Statistics");
+    
+    // After showing the section, reset the flag to avoid showing it again on subsequent reloads
+    localStorage.setItem("showStatistics", "false");
+  }
 });
 
 // Initialize the game board

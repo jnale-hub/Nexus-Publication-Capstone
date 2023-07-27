@@ -186,3 +186,9 @@
   float: right;
   margin: .3rem;
 }
+
+#ranks-restart {
+  float: right;
+  font-size: 1.3rem;
+  padding-right: .5rem;
+}
