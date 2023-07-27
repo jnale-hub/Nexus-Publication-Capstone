@@ -87,6 +87,10 @@ export function triggerConfetti() {
 
     const confetti = new ConfettiGenerator(confettiSettings);
     confetti.render();
+
+    setTimeout(() => {
+        confetti.clear();
+    }, 5000);
 }
 
 // Create the function that will change the keybord
