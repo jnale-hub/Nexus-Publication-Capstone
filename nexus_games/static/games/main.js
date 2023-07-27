@@ -41,6 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  document.querySelectorAll("#view-stats").forEach((button) => {
+    button.addEventListener("click", () => {
+      showSection("Stats");
+    });
+  });
+  
   document.getElementById("apply-settings").addEventListener("click", () => {
     applySettings();
   });

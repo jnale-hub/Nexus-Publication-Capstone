@@ -199,7 +199,7 @@ export function updateStats(isWin) {
         console.log("Elements:", playedElement, wonElement, percentElement);
         playedElement.textContent = gamesPlayed;
         wonElement.textContent = gamesWon;
-        percentElement.textContent = percentWins;
+        percentElement.textContent = percentWins + "%";
 
         console.log("Stats updated successfully:", data);
 
