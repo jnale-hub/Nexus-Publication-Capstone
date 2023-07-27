@@ -35,7 +35,7 @@ export function showSection(sectionTitle) {
 
     // Show/hide the respective div sections based on the selected button
     switch (sectionTitle) {
-        case "Stats":
+        case "Statistics":
             statsSection.style.display = "block";
             settingsSection.style.display = "none";
             helpSection.style.display = "none";

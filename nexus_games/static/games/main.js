@@ -43,10 +43,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.querySelectorAll("#view-stats").forEach((button) => {
     button.addEventListener("click", () => {
-      showSection("Stats");
+      showSection("Statistics");
     });
   });
-  
+
   document.getElementById("apply-settings").addEventListener("click", () => {
     applySettings();
   });
