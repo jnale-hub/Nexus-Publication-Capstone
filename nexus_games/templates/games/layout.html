@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light py-3 border-bottom align-items-center mb-4 mb-lg-0">
+    <nav class="navbar navbar-expand-md navbar-light py-3 border-bottom align-items-center mb-4 mb-lg-1">
         <div class="container">
             <a class="navbar-brand fw-bolder fs-5" href="{% url 'index' %}">Nexus Games</a>
             <div class="d-flex align-items-center">
@@ -28,13 +28,14 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="nav-link d-flex align-items-center d-md-none" title="{{ user.name }}">
-                    <div class="ratio ratio-1x1 mx-md-2 me-3 mt-1" style="width: 28px; height: 28px;">
+                    <div class="ratio ratio-1x1 mx-md-2 me-3 mt-1" style="width: 28px; height: 28px;" id="userDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ user.picture }}" alt="{{ user.name }}" class="rounded-circle"
                             style="object-fit: cover;">
                     </div>
-                    <div class="text-capitalize d-none d-lg-block pe-3"><span class="">{{ user.name }}</span></div>
                     <div class="badge bg-primary fw-bold p-2"><span id="points-num">{{ user.points }}</span> Points
                     </div>
+                    {% include 'nexus_pub/profile-dropdown.html' %}
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -63,6 +64,39 @@
                                 Points</div>
                         </div>
                     </li>
+                    <li class="nav-item d-xl-none">
+                        <a class="nav-link collapsed" data-bs-toggle="collapse" href="#profile-nav" role="button" aria-expanded="false">
+                          <span>{{ user.name }}</span>
+                          <i class="bi bi-chevron-down ms-1"></i>
+                        </a>
+                        <ul id="profile-nav" class="collapse nav-content" data-bs-parent="#sidebar-nav">
+                          <li>
+                            <a class="nav-link" href="{% url 'starred_articles' %}">
+                              <span>Starred Article</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="nav-link" href="{% url 'saved_articles' %}">
+                              <span>Saved Article</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#profileModal">
+                              <span>My Profile</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="nav-link" href="{% url 'index' %}">
+                              <span>Account Settings</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="nav-link" href="{% url 'logout' %}">
+                              <span>Log Out</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registerModal"><i
@@ -78,12 +112,15 @@
         </div>
     </nav>
 
+    <div class="container">
+        {% bootstrap_messages %}
+      </div>
+
     <main class="content">
         {% block body %}
 
         {% endblock %}
     </main>
-
     {% include 'nexus_pub/modals.html' %}
 </body>
 

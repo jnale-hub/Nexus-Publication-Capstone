@@ -1,3 +1,6 @@
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.urls import reverse
@@ -88,3 +91,53 @@ def update_stats(request, isWin):
         })
 
     return JsonResponse({"success": False})
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        article_id = request.POST.get("article_id")
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            if article_id:
+                article_url = reverse('view_article', kwargs={'id': article_id})
+                return redirect(f"{article_url}#toggle-comments")
+            return redirect("games")
+        else:
+            messages.error(request, 'Invalid username and/or password.')
+            return redirect("games")
+    else:
+        return redirect("games")
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("games"))
+
+def register(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        confirmation = request.POST.get("confirmation")
+
+        # Ensure password matches confirmation
+        if password != confirmation:
+            messages.error(request, 'Passwords does not match!')
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(name=name, username=username, email=email, password=password)
+            login(request, user)
+            return HttpResponseRedirect(reverse("games"))
+        except IntegrityError as e:
+            if 'UNIQUE constraint failed: nexus_pub_user.username' in str(e):
+                messages.error(request, 'Username already taken. Please choose a different username.')
+            else:
+                # Handle other IntegrityError cases or unexpected errors
+                print(e)
+                messages.error(request, 'An error occurred. Please try again later.')
+
+    return redirect("games")
