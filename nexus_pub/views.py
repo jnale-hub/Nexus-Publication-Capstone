@@ -265,7 +265,7 @@ def login_view(request):
             return redirect("index")
         else:
             messages.error(request, 'Invalid username and/or password.')
-            return render(request, "nexus_pub/index.html")
+            return redirect("index")
     else:
         return redirect("index")
 
