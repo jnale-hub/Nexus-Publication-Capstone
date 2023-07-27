@@ -264,11 +264,10 @@ def login_view(request):
                 return redirect(f"{article_url}#toggle-comments")
             return redirect("index")
         else:
-            return render(request, "nexus_pub/index.html", {
-                "message": "Invalid username and/or password."
-            })
+            messages.error(request, 'Invalid username and/or password.')
+            return render(request, "nexus_pub/index.html")
     else:
-        return render(request, "nexus_pub/index.html")
+        return redirect("index")
 
 def logout_view(request):
     logout(request)
@@ -285,9 +284,7 @@ def register(request):
 
         # Ensure password matches confirmation
         if password != confirmation:
-            return render(request, "nexus_pub/index.html", {
-                "message": "Passwords must match."
-            })
+            messages.error(request, 'Passwords does not match!')
 
         # Attempt to create new user
         try:
@@ -298,9 +295,11 @@ def register(request):
                 return redirect(f"{article_url}#toggle-comments")
             return HttpResponseRedirect(reverse("index"))
         except IntegrityError as e:
-            print(e)
-            return render(request, "nexus_pub/index.html", {
-                "message": "Name already taken."
-            })
+            if 'UNIQUE constraint failed: nexus_pub_user.username' in str(e):
+                messages.error(request, 'Username already taken. Please choose a different username.')
+            else:
+                # Handle other IntegrityError cases or unexpected errors
+                print(e)
+                messages.error(request, 'An error occurred. Please try again later.')
 
-    return render(request, "nexus_pub/index.html")
+    return redirect("index")
