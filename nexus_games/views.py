@@ -29,13 +29,22 @@ def wordle(request):
     percentage_wins = (games_won * 100) / games_played if games_played > 0 else 0
 
     # Get the top 5 users with the highest number of games won
-    top_users = GameResult.objects.order_by('-wordle_won')[:5]
+    top_users = GameResult.objects.order_by('-wordle_won')[:10]
+
+    # Find the ranking of the current user in the entire list of users
+    user_ranking = None
+    all_users = GameResult.objects.order_by('-wordle_won')
+    for rank, top_user in enumerate(all_users, start=1):
+        if top_user.user == user:
+            user_ranking = rank
+            break
 
     return render(request, "games/wordle.html", {
         'games_played': games_played,
         'games_won': games_won,
         'percentage_wins': percentage_wins,
         'top_users': top_users,
+        'user_ranking': user_ranking,
     })
 
 @csrf_exempt
