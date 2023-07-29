@@ -16,7 +16,11 @@
                         <div class="card-body">
                             <h4 class="card-title fw-bold my-1">Wordle</h4>
                             <p class="card-text my-1">Solve a wordle</p>
+                            {% if user.is_authenticated %}
                             <a class="btn btn-outline-primary py-1 mt-2" href="{% url 'wordle' %}">Play</a>
+                            {% else %}
+                            <a class="btn btn-outline-primary py-1 mt-2" data-bs-toggle="modal" data-bs-target="#loginModal">Play</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -27,7 +31,7 @@
                         <div class="card-body">
                             <h4 class="card-title fw-bold my-1">Spelling Bee</h4>
                             <p class="card-text my-1">Solve a wordle</p>
-                            <a class="btn btn-outline-primary py-1 mt-2" href="{% url 'index' %}">Play</a>
+                            <a class="btn btn-outline-primary py-1 mt-2">Play</a>
                         </div>
                     </div>
                 </div>

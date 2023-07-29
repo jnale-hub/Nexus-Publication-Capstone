@@ -10,6 +10,7 @@
         <form action="{% url 'login' %}" method="post">
           {% csrf_token %}
           <input type="hidden" name="article_id" value="{{ article.id }}">
+          <input type="hidden" name="is_games" value="{{ games }}">
           <div class="mb-3">
             <label for="name" class="form-label">Username</label>
             <input type="name" class="form-control" name="username" placeholder="Enter username">
@@ -41,6 +42,7 @@
               <form action="{% url 'register' %}" method="post">
                   {% csrf_token %}
                   <input type="hidden" name="article_id" value="{{ article.id }}">
+                  <input type="hidden" name="is_games" value="{{ games }}">
                   <div class="mb-3">
                       <label for="name" class="form-label">Display Name</label>
                       <input type="text" class="form-control" name="name" placeholder="Enter your name">

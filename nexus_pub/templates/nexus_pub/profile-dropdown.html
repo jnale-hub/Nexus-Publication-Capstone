@@ -37,7 +37,7 @@
       <hr class="dropdown-divider m-0">
     </li>
     <li>
-      <a class="dropdown-item d-flex align-items-center py-2" href="{% url 'logout' %}">
+      <a class="dropdown-item d-flex align-items-center py-2" {% if games %} href="{% url 'logout_games' %}" {% else %} href="{% url 'logout' %}" {% endif %}>
         <i class="bi bi-box-arrow-right pe-2"></i>
         <span>Log Out</span>
       </a>
