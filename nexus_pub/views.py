@@ -255,6 +255,7 @@ def login_view(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
         article_id = request.POST.get("article_id")
+        is_games = request.POST.get("is_games")
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
@@ -262,11 +263,19 @@ def login_view(request):
             if article_id:
                 article_url = reverse('view_article', kwargs={'id': article_id})
                 return redirect(f"{article_url}#toggle-comments")
+            elif is_games:
+                print("Is Games")
+                return redirect("games")
             return redirect("index")
         else:
             messages.error(request, 'Invalid username and/or password.')
+            if is_games:
+                print("Is Games")
+                return redirect("games")
             return redirect("index")
     else:
+        if is_games:
+            return redirect("games")
         return redirect("index")
 
 def logout_view(request):
@@ -281,6 +290,7 @@ def register(request):
         article_id = request.POST.get("article_id")
         password = request.POST.get("password")
         confirmation = request.POST.get("confirmation")
+        is_games = request.POST.get("is_games")
 
         # Ensure password matches confirmation
         if password != confirmation:
@@ -293,6 +303,9 @@ def register(request):
             if article_id:
                 article_url = reverse('view_article', kwargs={'id': article_id})
                 return redirect(f"{article_url}#toggle-comments")
+            elif is_games:
+                print("Is Games")
+                return redirect("games")
             return HttpResponseRedirect(reverse("index"))
         except IntegrityError as e:
             if 'UNIQUE constraint failed: nexus_pub_user.username' in str(e):
