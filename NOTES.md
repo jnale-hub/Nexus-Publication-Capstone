@@ -10,6 +10,8 @@
 
 - The other games, I want to build that quiz bee and spelling bee but I know it will take a lot of time and effort. But hopefully I could handle it.
 
+- Maximise the news api, I want to have a selection of countries that filters it out..
+
 ### Lesson Learned
 
 - I should commit more often
