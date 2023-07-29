@@ -27,6 +27,7 @@
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                {% if user.is_autheticated %}
                 <a class="nav-link d-flex align-items-center d-md-none" title="{{ user.name }}">
                     <div class="ratio ratio-1x1 mx-md-2 me-3 mt-1" style="width: 28px; height: 28px;" id="userDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,6 +38,7 @@
                     </div>
                     {% include 'nexus_pub/profile-dropdown.html' %}
                 </a>
+                {% endif %}
             </div>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav justify-content-between">

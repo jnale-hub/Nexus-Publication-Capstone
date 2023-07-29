@@ -28,13 +28,13 @@
         </div>
         <div class="col-2 fw-bold">
             {% if forloop.counter == 1 %}
-            <span class="fs-3">1st</span>
+            <span class=""> 🥇 1st </span>
             {% elif forloop.counter == 2 %}
-            <span class="fs-4">2nd</span>
+            <span class=""> 🥈 2nd </span>
             {% elif forloop.counter == 3 %}
-            <span class="fs-5">3rd</span>
+            <span class=""> 🥉 3rd </span>
             {% else %}
-            {{ forloop.counter }}th
+            🎖 {{ forloop.counter }}th
             {% endif %}
         </div>
     </div>

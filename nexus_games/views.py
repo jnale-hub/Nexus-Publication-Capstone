@@ -31,7 +31,7 @@ def wordle(request):
     percentage_wins = (games_won * 100) / games_played if games_played > 0 else 0
 
     # Get the top 5 users with the highest number of games won
-    top_users = GameResult.objects.order_by('-wordle_won')[:10]
+    top_users = GameResult.objects.order_by('-wordle_won')[:5]
 
     # Find the ranking of the current user in the entire list of users
     user_ranking = None
