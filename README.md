@@ -19,25 +19,93 @@ I believe this project satisfies the distinctiveness and complexity requirements
 ### 1. Nexus Publication
 
 ##### Description
+
+In this app, an admin can post articles with its respective data from staffs and categorize it. The user can star article and save articles, they can also view and read the whole article, commen
+
+
 ##### Models
+
+User
+
+Staff
+
+Category
+
+Article
+
+Comments
+
 ##### Features
+
+* Category Filter
+
+* Date Filtering
+
+* Query Search
+
+* Save Article
+
+* Star article
+
+* Pagination
+
 ##### Pages
+
+* Index Page
+
+This is where all news sorted by the date it was published shows, it has carousel utilized from boootstrap that picks the headline of the newest article by category.
+
+* Article Page
+
+When a article is clicked, you ar e directed to the article to view the whole story, it also has comment section where the user can toggle the comments oor hide it. The commenst are paginated. 
+
+* Staff Page
+
+* Saved / Starred Article Page
+
 ##### File Structure
+
+nexus_pub/__pycache__ nexus_pub/migrations nexus_pub/static nexus_pub/templates nexus_pub/templates/nexus_pub nexus_pub/templates/nexus_pub/article-grid.html nexus_pub/templates/nexus_pub/article.html nexus_pub/templates/nexus_pub/index.html nexus_pub/templates/nexus_pub/layout.html nexus_pub/templates/nexus_pub/minimal.html nexus_pub/templates/nexus_pub/modals.html nexus_pub/templates/nexus_pub/profile-dropdown.html nexus_pub/templates/nexus_pub/search-form.html nexus_pub/templates/nexus_pub/staff.html nexus_pub/__init__.py nexus_pub/admin.py nexus_pub/apps.py nexus_pub/models.py nexus_pub/tests.py nexus_pub/urls.py nexus_pub/views.py
 
 ### 2. Nexus Games
 
 ##### Description
+
 ##### Models
+
+GameResult
+
 ##### Features
+
+Wordle User Ranking
+
+Statistics Menu and Point System
+
+Settings Menu
+
+Help Menu
+
+Surrender Button
+
+Restart Button
+
 ##### Pages
+
+Games Page
+
+Wordle Page
+
 ##### File Structure
 
 ### 3. Nexus World News
 
 ##### Description
-##### Models
+
 ##### Features
+
 ##### Pages
+
+
 ##### File Structure
 
 ## Main File Structure
