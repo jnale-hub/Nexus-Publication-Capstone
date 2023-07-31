@@ -1,20 +1,27 @@
 # CAPSTONE - Nexus-Publication
 #### Demo video:  <>
 
-HI there!
+Hi there!
 
-This is my Final Project for the course CS50’s Web Programming with Python and JavaScript. It is built with  Django, HTML, CSS, Javascript, Python, and Bootstrap.
+This is my Final Project for the course CS50’s Web Programming with Python and JavaScript. It is built with Django, HTML, CSS, JavaScript, Python, and Bootstrap.
 
-Nexus Publication is the name of my college's school paper so I wanted to make web app that can have articles, have a game section, and can browse for world news. 
+"Nexus Publication" is the name of my college's school paper, so I decided to create a web app that features articles, a game section, and the ability to browse world news.
 
-The main inspiration for this project is The New York Times Games, I love playing wordle and I tried to make my own. And why not make a web app for my school paper and have games section in it.
+The main inspiration for this project is The New York Times Games; I enjoy playing wordle, and I tried to create my own version of it. Additionally, I thought it would be great to have a web app for my school paper that also includes a games section.
 
 ## Distinctiveness and Complexity
-I believe this project satisfies the distinctiveness and complexity requirements because it cointains three main apps that have its own usabilty. 
+
+I believe this project satisfies the distinctiveness and complexity requirements because this project contains three main apps with different functionalities and I build this web application for my local college publication. 
+
+The "Nexus Pub" app deals with news articles, authors, categories, comments, and user profiles. 
+
+The "Nexus Games" app offers a gaming experience with a scoring system and user rankings. 
+
+The "Nexus World News" utilizes news API to fetch real-time news data from around the world, allowing users to search for news by category or query. 
 
 ## Main Apps:
 
-### 1. Nexus Publication
+### 1. Nexus Publication App
 
 #### Description
 
@@ -32,7 +39,6 @@ In this app, an admin can post articles with its respective data from staffs and
      - `starred_articles`: Many-to-many relationship with the `Article` model, allowing users to star articles, related name is `starred_by`.
 
 2. **Staff Model**:
-   - Represents staff members.
    - Fields:
      - `name`: Character field for the staff member's name.
      - `position`: Character field for the staff member's position (optional, can be blank).
@@ -41,12 +47,10 @@ In this app, an admin can post articles with its respective data from staffs and
      - `email`: Email field for staff member contact.
 
 3. **Category Model**:
-   - Represents article categories.
-   - Fields:
+   - Field:
      - `category`: Character field for the category name.
 
 4. **Article Model**:
-   - Represents an article.
    - Fields:
      - `title`: Character field for the article title.
      - `description`: Character field for the article description (optional, can be blank).
@@ -57,7 +61,6 @@ In this app, an admin can post articles with its respective data from staffs and
      - `image`: URL field for the article's image, default is set to `settings.DEFAULT_IMAGE`.
 
 5. **Comment Model**:
-   - Represents a comment on an article.
    - Fields:
      - `content`: Text field for the comment content.
      - `user`: Foreign key to the `User` model, representing the commenter, with `on_delete=models.CASCADE`.
@@ -83,8 +86,6 @@ This app incorporates the following features:
 7. **Edit Profile**: Users can edit their profile information, allowing them to update details like name, profile picture, and email for better personalization.
 
 #### Pages
-
-This app comprises the following pages:
 
 1. **Index Page**:
    - This page displays all news articles sorted by the date of publication.
@@ -117,7 +118,6 @@ The application's file structure is organized as follows:
    - `views.py`: Contains view functions that handle HTTP requests and generate responses.
 
 2. **nexus_pub/templates/**:
-   - Directory containing HTML templates for the application.
    - Templates include:
      - `nexus_pub/layout.html`: Base template that defines the overall structure of other pages.
      - `nexus_pub/minimal.html`: A minimal template to use in a minimal view of articles, I use `{% include %}` function to be more flexible. Used in star and saved articles page.
@@ -130,14 +130,11 @@ The application's file structure is organized as follows:
      - `nexus_pub/index.html`: Template for the index page, showing all news articles.
 
 3. **nexus_pub/static/nexus_pub/**:
-   - Directory containing static files for the application.
    - Static files include:
      - `nexus_pub/main.js`: JavaScript file for client-side functionalities and interactions, includes toggle comments, pagination of the comments using the see more button.
      - `nexus_pub/styles.css`: CSS file for defining the application's visual styles and layout.
 
 #### View Functions
-
-This application contains the following view functions:
 
 1. `index(request)`: Handles the rendering of the index page, displaying news articles sorted by date of publication. It includes a carousel showcasing the newest article headlines from each category.
 
@@ -167,8 +164,6 @@ This application contains the following view functions:
 
 14. `register(request)`: Handles user registration and redirects them to the desired page after successful registration.
 
-The views interact with the corresponding templates to render the user interface and handle user interactions with the application.
-
 ### Nexus Games App
 
 #### Description
@@ -183,14 +178,8 @@ The "Nexus Games" app is focused on offering a collection of games to users. Cur
       - `user`: Foreign key to the `User` model from the "Nexus Pub" app, representing the user who played the game.
       - `wordle_played`: Integer field to track the number of times the user has played the "Wordle" game, with a default value of 0.
       - `wordle_won`: Integer field to track the number of times the user has won the "Wordle" game, with a default value of 0.
-      - `__str__` method is defined to return a string representation of the game results for the user.
-
-#### Planned Expansion
--The Nexus Games app has future plans to extend its offerings by adding more games to provide users with a diverse selection of entertainment options. As new games are developed and integrated into the app, additional models and views specific to each game will be implemented. This expansion aims to enhance the overall gaming experience for the users.
 
 #### Features
-
-The Nexus Games app offers the following features:
 
 1. **Wordle User Ranking**:
    - Provides a ranking system that tracks and displays the performance of users in the "Wordle" game.
@@ -221,9 +210,8 @@ The Nexus Games app offers the following features:
 
 9. **Confetti Effect**:
    - When the user wins, an animation of confetti shows.
-#### Pages
 
-The Nexus Games app consists of the following pages:
+#### Pages
 
 1. **Games Page**:
    - This page serves as the landing page for the Nexus Games app.
@@ -287,24 +275,71 @@ The file structure of the "Nexus Games" app is organized as follows:
    - This function handles the user logout from the Nexus Games app.
    - After the user is logged out, they are redirected to the games page.
 
-The view functions implement various functionalities related to user authentication, game statistics, and ranking calculations to enhance the user experience and provide an interactive gaming environment within the Nexus Games app.
+#### Planned Expansion
+-The Nexus Games app has future plans by adding more games to provide users with a diverse selection of options. As new games are developed and integrated into the app, additional models and views specific to each game will be implemented. This expansion aims to enhance the overall gaming experience for the users.
 
-### 3. Nexus World News
+### Nexus World News App
 
-##### Description
+#### Description
 
-##### Features
+Nexus World News is an app that utilizes the news API to fetch the latest and most popular news worldwide. Users can search for news based on categories and specific queries.
 
-##### Pages
+#### Pages
 
+- **Index Page**: This is the main page of the Nexus World News app where the latest news articles and headlines are displayed. Users can also search for news by entering a search query or selecting a category.
 
-##### File Structure
+#### File Structure
 
-## Main File Structure
+- **world_news/**
+  - `templates/`: Directory for HTML templates used in the app.
+  - `templates/world_news/`: Subdirectory for app-specific templates.
+    - `index.html`: Template for the Index page displaying the latest news articles and headlines.
+  - `admin.py`: Django admin site configurations for managing app models.
+  - `apps.py`: Django app configurations, such as the app name and settings.
+  - `tests.py`: Unit tests for the app.
+  - `urls.py`: URL patterns and corresponding view functions for the app.
+  - `views.py`: Contains view functions handling HTTP requests and generating responses for the app.
 
-## Installation & How to run the project
+#### View Functions
+
+- **`index(request)`**:
+  - This function handles the rendering of the Index page, which displays the latest news articles and headlines.
+  - The function utilizes the news API to fetch the data and display it on the page.
+  - Users can search for news by entering a search query, and the API URL is adjusted accordingly to fetch relevant results.
+  - The API response is parsed and relevant data, such as article titles, descriptions, URLs, and published dates, is extracted.
+  - The extracted data is organized and sent to the template to be displayed as headlines and news articles.
+  - The context also includes a list of categories to enable users to explore news by different topics.
+  
+## Installation & How to Run the Project
+
+To run the project, follow the steps below:
+
+1. Install the dependencies:
+   ```bash
+   $ pip install -r requirements.txt
+   ```
+
+2. Make migrations for the database:
+   ```bash
+   $ python manage.py makemigrations
+   ```
+
+3. Apply the migrations:
+   ```bash
+   $ python manage.py migrate
+   ```
+
+4. Finally, run the Django project:
+   ```bash
+   $ python manage.py runserver
+   ```
 
 ## Comments
-A big thanks to the whole Team of CS50 for providing courses with such a high quality.  
+
+A huge huge thanks to the whole team of CS50 for providing courses with such a high quality 👏👏👏
 
 ## Stay in touch
+
+- LinkedIn: [John Mark Delima](https://www.linkedin.com/in/delimajohnmark)
+- Email: [delimajohnmark14@gmail.com](mailto:delimajohnmark14@gmail.com)
+- [Personal Portfolio](https://jnale-hub.github.io/John-Mark-Delima/)
