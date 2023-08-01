@@ -85,6 +85,8 @@ This app incorporates the following features:
 
 7. **Edit Profile**: Users can edit their profile information, allowing them to update details like name, profile picture, and email for better personalization.
 
+8. **Commenting**: Authenticated users can view and add comments, The items are paginated using javascript to improve user interface, they can also toggle and hide them.
+
 #### Pages
 
 1. **Index Page**:
