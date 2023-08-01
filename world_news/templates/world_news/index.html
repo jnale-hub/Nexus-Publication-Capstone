@@ -1,4 +1,5 @@
-<!-- index.html -->
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +9,7 @@
     <title>World News | Nexus Publication</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
     <style>
         .navbar-collapse {
             flex-grow: 0;
@@ -25,7 +27,7 @@
 <body>
     <nav class="navbar navbar-expand-xl navbar-light mb-4 py-3 border-bottom align-items-center">
         <div class="container">
-            <a class="navbar-brand fw-bolder fs-4" href="{% url 'index' %}">World News</a>
+            <a class="navbar-brand fw-bolder fs-5" href="{% url 'index' %}">Nexus World News</a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -50,7 +52,6 @@
                     </div>
                 </form>
             </div>
-            
         </div>
     </nav>
 
@@ -99,9 +100,9 @@
 
         <article class="container">
             <div class="row">
-                {% if data %}
+                {% if page_obj %}
                 <h3 class="fw-bold text-md-center my-3">{% if search %} News About <span class="text-capitalize">{{ search }}</span> {% else %} More News {% endif %}</h3>
-                {% for news in data %}
+                {% for news in page_obj %}
                 <div class="col-lg-4 col-sm-6 card mb-5 border-0">
                     <div class="pe-md-4">
                         <div class="ratio ratio-16x9">
@@ -123,31 +124,37 @@
 
             <div class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                <a href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}" class="page-link" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
                 {% endif %}
             
                 {% for page in page_obj.paginator.page_range %}
                 {% if page_obj.number == page %}
-                <a href="?page={{ page }}" class="page-link active">{{ page }}</a>
+                <a href="?page={{ page }}{% if search %}&search={{ search }}{% endif %}" class="page-link active">{{ page }}</a>
                 {% else %}
-                <a href="?page={{ page }}" class="page-link">{{ page }}</a>
+                <a href="?page={{ page }}{% if search %}&search={{ search }}{% endif %}" class="page-link">{{ page }}</a>
                 {% endif %}
                 {% endfor %}
             
                 {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="page-link" aria-label="Next">
+                <a href="?page={{ page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}" class="page-link" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
                 {% endif %}
             </div>
+            
         </article>
         {% else %}
         <h4 class="mt-4 text-center fw-bold"> Request Failed. </h4>
         {% endif %}
     </main>
 
+    <footer class="bg-light text-center py-3 mt-5">
+        <p class="mb-0">© {% now "Y" %} Nexus Publication. All rights reserved.</p>
+        <p class="mb-0">Designed and developed by <a class="fw-bold text-reset" href="https://github.com/jnale-hub">John Mark Delima</a></p>
+    </footer>    
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
