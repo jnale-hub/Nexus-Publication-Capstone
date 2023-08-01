@@ -8,3 +8,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.content {
+    min-height: 500px;
+}

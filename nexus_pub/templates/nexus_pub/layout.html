@@ -14,7 +14,7 @@
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <link href="{% static 'nexus_pub/styles.css' %}" rel="stylesheet">
     <script src="{% static 'nexus_pub/main.js' %}"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/7553/7553719.png">
+    <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
     {% block head %}{% endblock %}
 </head>
 
@@ -157,6 +157,11 @@
         </a>
         {% endif %}
     </div>
+
+    <footer class="bg-light text-center py-3">
+      <p class="mb-0">© {% now "Y" %} Nexus Publication. All rights reserved.</p>
+      <p class="mb-0">Designed and developed by <a class="fw-bold text-reset" href="https://github.com/jnale-hub">John Mark Delima</a></p>
+    </footer>    
 
     {% include 'nexus_pub/modals.html' %}
 </body>

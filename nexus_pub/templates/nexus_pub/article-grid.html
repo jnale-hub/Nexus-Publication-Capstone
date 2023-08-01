@@ -38,11 +38,11 @@
         </div>
         {% endfor %}
         {% elif category %}
-        <h5 class="mt-4 text-center fw-bold"> No available articles. </h5>
+        <h5 class="my-4 pb-5 text-center fw-bold"> No available articles. </h5>
         {% elif search %}
-        <h5 class="mt-4 text-center fw-bold"> No available articles about <span class="text-capitalize">{{ search }}.</span></h5>
+        <h5 class="my-4 pb-5 text-center fw-bold"> No available articles about <span class="text-capitalize">{{ search }}.</span></h5>
         {% elif date_range %}
-        <h5 class="mt-4 text-center fw-bold"> No available articles from {{ date_range }}.</h5>
+        <h5 class="my-4 pb-5 text-center fw-bold"> No available articles from {{ date_range }}.</h5>
         {% endif %}
     </div>
 
