@@ -1,33 +1,118 @@
 # CAPSTONE - Nexus-Publication
 #### Demo video:  <https://youtu.be/6O86-1Jj6g4>
 
-Hi there!
+Hi!
 
-This is my Final Project for the course CS50’s Web Programming with Python and JavaScript. It is built with Django, HTML, CSS, JavaScript, Python, and Bootstrap.
+Welcome to my Final Project for CS50’s Web Programming with Python and JavaScript. This project is built using Django, HTML, CSS, JavaScript, Python, and Bootstrap.
 
-"Nexus Publication" is the name of my college's school paper, so I decided to create a web app that features articles, a game section, and the ability to browse world news.
+## Inspiration and Concept
 
-The main inspiration for this project is The New York Times Games; I enjoy playing wordle, and I tried to create my own version of it. Additionally, I thought it would be great to have a web app for my school paper that also includes a games section.
+"Nexus Publication" is dedicated to my college's school paper. I've designed a web app that features articles and also includes a game section and real-time world news browsing.
+
+My inspiration stems from The New York Times Games, particularly the Wordle game.
 
 ## Distinctiveness and Complexity
 
-I believe this project satisfies the distinctiveness and complexity requirements because this project contains three main apps with different functionalities and I build this web application for my local college publication. 
+I believe this project satisfies the distinctiveness and complexity requirements because it integrates three distinct apps – Nexus Publication, Nexus Games, and Nexus World News. Each app serves a unique purpose and brings complexity to the overall project.
 
-The "Nexus Pub" app deals with news articles, authors, categories, comments, and user profiles. 
+- **Nexus Publication App**: This app offers platform for news articles, creating an engaging reading experience. This app incorporates the following features:
 
-The "Nexus Games" app offers a gaming experience with a scoring system and user rankings. 
+   1. **Category Filter**: Users can filter articles by category, enabling them to view articles specific to their interests.
+   
+   2. **Date Filtering**: Users can apply date filtering to find articles published within a particular timeframe.
+   
+   3. **Query Search**: A search functionality that allows users to enter keywords and retrieve articles matching their search queries.
+   
+   4. **Save Article**: Users have the option to save articles for later reading, making it convenient to access content of interest.
+   
+   5. **Star Article**: Users can star articles to mark them as favorites, making it easy to revisit and keep track of preferred content.
+   
+   6. **Pagination**: The application implements pagination, ensuring that articles are presented in manageable and navigable chunks, improving user experience.
+   
+   7. **Edit Profile**: Users can edit their profile information, allowing them to update details like name, profile picture, and email for better personalization.
 
-The "Nexus World News" utilizes news API to fetch real-time news data from around the world, allowing users to search for news by category or query. 
+- **Nexus Games App**: This app offers a gaming experience with a scoring system and user rankings. It currently features one game "Wordle", While it currently has just one game, I plan to add more games in the future. It is developed mainly with Javascript with the following features:
 
-## Main Apps:
+   1. **Wordle User Ranking**: Provides a ranking system that tracks and displays the performance of users in the "Wordle" game. Users can view their rankings compared to other players, it shows the Top 5 users based on the number of games won or points scored. It also involves a reload button to get the latest ranking among the users.
+   
+   2. **Statistics Menu**: Includes a statistics menu where users can access the amount they played the game, the number won, and their winning percentage.
+   
+   3. **Help Menu**: Provides game instructions, rules, and tips to assist users in understanding and playing the games effectively.
+   
+   4. **Surrender Button**: Users can choose to surrender or give up during a game.
 
-### 1. Nexus Publication App
+   5. **Restart Button**: Allows users to restart or reset a game if they wish to begin again from the beginning or retry a challenge.
+   
+   6. **Message**: The user is prompted of a message if they input a word not on the list or shorter than the word length to be guessed.
+   
+   7. **Win or Lose Modal**: If the user loses or wins, they are prompted by a modal and have the button to restart or to view stats.
+   
+   8. **Confetti Effect**: When the user wins, an animation of confetti shows.
 
-#### Description
+- **Nexus World News App**:  This app fetches real-time news using a news API. Users can search for news by category or specific queries, staying updated with the latest information.
 
-In this app, an admin can post articles with its respective data from staffs and categorize it. The user can star and save articles, they can also view and read the whole article, and add and view comments on it.
+## File Structure
 
-#### Models
+1. **nexus_pub/**:
+   - `__init__.py`: A Python package file indicating that the directory is a Python package.
+   - `admin.py`: Contains Django admin site configurations for managing application models.
+   - `apps.py`: Configurations related to the Django app, such as the app name and settings.
+   - `models.py`: Defines the application's database models, including the `User`, `Staff`, `Category`, `Article`, and `Comment` models.
+   - `tests.py`: Contains unit tests for the application.
+   - `urls.py`: Defines URL patterns and their corresponding view functions.
+   - `views.py`: Contains view functions that handle HTTP requests and generate responses.
+
+   - `nexus_pub/templates/`:
+     - `nexus_pub/layout.html`: Base template that defines the overall structure of other pages.
+     - `nexus_pub/minimal.html`: A minimal template to use in a minimal view of articles, I use `{% include %}` function to be more flexible. Used in star and saved articles page.
+     - `nexus_pub/modals.html`: Template for displaying modals such as the `log in`, `register`, `user profile`, `edit profile`, and `filter date` modal.
+     - `nexus_pub/profile-dropdown.html`: Template for the user profile dropdown.
+     - `nexus_pub/search-form.html`: Template for the search form.
+     - `nexus_pub/staff.html`: Template for displaying staff information.
+     - `nexus_pub/article-grid.html`: Template for presenting articles in a grid layout.
+     - `nexus_pub/article.html`: Template for displaying the details of a single article, and where the comments are.
+     - `nexus_pub/index.html`: Template for the index page, showing all news articles.
+   
+   - `nexus_pub/static/nexus_pub/`:
+     - `nexus_pub/main.js`: JavaScript file for client-side functionalities and interactions, includes toggle comments, pagination of the comments using the see more button.
+     - `nexus_pub/styles.css`: CSS file for defining the application's visual styles and layout.
+
+2. **nexus_games/**
+   - `static/`: Directory for static files used in the app.
+   - `static/games/`: Subdirectory for game-specific static files.
+     - `game.js`: JavaScript file for game-related logic and functionalities. Functions includes: initBoard, abortGame, rightGuessString, and updateStats.
+     - `main.js`: Main JavaScript file for the games app, includes the event listeners.
+     - `ui.js`: JavaScript file for user interface interactions in the games. Functions includes: showFinalMessage, showLoseModal, showWinModal, showSection, showMessage, howFinalMessage, showWinModal, triggerConfetti, shadeKeyBoard, and animateCSS.
+     - `wordle.css`: CSS file for styling the Wordle game.
+     - `words.js`: JavaScript file containing word data for the games.
+   - `templates/`: Directory for HTML templates used in the app.
+   - `templates/games/`: Subdirectory for game-specific templates.
+     - `dashboard.html`: Template for the dashboard page displaying user rankings and statistics.
+     - `games.html`: Template for the games page listing the available games.
+     - `layout.html`: Base template defining the overall structure for other game-specific templates.
+     - `wordle.html`: Template for the Wordle game page.
+   - `templatetags/`: Directory for custom template tags (used to extend template functionalities).
+     - `custom_filters.py`: Python file containing custom template filter which is `ordinalize` for the user ranking.
+   - `admin.py`: Django admin site configurations for managing app models.
+   - `apps.py`: Django app configurations, such as the app name and settings.
+   - `models.py`: App-specific database models, including the `GameResult` model.
+   - `tests.py`: Unit tests for the app.
+   - `urls.py`: URL patterns and corresponding view functions for the app.
+   - `views.py`: Contains view functions handling HTTP requests and generating responses for the app.
+
+3. **world_news/**
+   - `templates/`: Directory for HTML templates used in the app.
+   - `templates/world_news/`: Subdirectory for app-specific templates.
+    - `index.html`: Template for the Index page displaying the latest news articles and headlines.
+   - `admin.py`: Django admin site configurations for managing app models.
+   - `apps.py`: Django app configurations, such as the app name and settings.
+   - `tests.py`: Unit tests for the app.
+   - `urls.py`: URL patterns and corresponding view functions for the app.
+   - `views.py`: Contains view functions handling HTTP requests and generating responses for the app.
+
+## Nexus Publication App
+
+### Models
 
 1. **User Model**:
    - Represents a user in the system, extending `AbstractUser`.
@@ -67,27 +152,7 @@ In this app, an admin can post articles with its respective data from staffs and
      - `article`: Foreign key to the `Article` model, for which the comment belongs, with `on_delete=models.CASCADE`.
      - `date`: Date-time field for the comment date, auto-generated.
 
-#### Features
-
-This app incorporates the following features:
-
-1. **Category Filter**: Users can filter articles by category, enabling them to view articles specific to their interests.
-
-2. **Date Filtering**: Users can apply date filtering to find articles published within a particular timeframe.
-
-3. **Query Search**: A search functionality that allows users to enter keywords and retrieve articles matching their search queries.
-
-4. **Save Article**: Users have the option to save articles for later reading, making it convenient to access content of interest.
-
-5. **Star Article**: Users can star articles to mark them as favorites, making it easy to revisit and keep track of preferred content.
-
-6. **Pagination**: The application implements pagination, ensuring that articles are presented in manageable and navigable chunks, improving user experience.
-
-7. **Edit Profile**: Users can edit their profile information, allowing them to update details like name, profile picture, and email for better personalization.
-
-8. **Commenting**: Authenticated users can view and add comments, The items are paginated using javascript to improve user interface, they can also toggle and hide them.
-
-#### Pages
+### Pages
 
 1. **Index Page**:
    - This page displays all news articles sorted by the date of publication.
@@ -106,37 +171,7 @@ This app incorporates the following features:
    - This page presents a collection of articles that the user has saved or starred for future reference.
    - Users can access their saved and starred articles conveniently in one place.
 
-#### File Structure
-
-The application's file structure is organized as follows:
-
-1. **nexus_pub/**:
-   - `__init__.py`: A Python package file indicating that the directory is a Python package.
-   - `admin.py`: Contains Django admin site configurations for managing application models.
-   - `apps.py`: Configurations related to the Django app, such as the app name and settings.
-   - `models.py`: Defines the application's database models, including the `User`, `Staff`, `Category`, `Article`, and `Comment` models.
-   - `tests.py`: Contains unit tests for the application.
-   - `urls.py`: Defines URL patterns and their corresponding view functions.
-   - `views.py`: Contains view functions that handle HTTP requests and generate responses.
-
-2. **nexus_pub/templates/**:
-   - Templates include:
-     - `nexus_pub/layout.html`: Base template that defines the overall structure of other pages.
-     - `nexus_pub/minimal.html`: A minimal template to use in a minimal view of articles, I use `{% include %}` function to be more flexible. Used in star and saved articles page.
-     - `nexus_pub/modals.html`: Template for displaying modals such as the `log in`, `register`, `user profile`, `edit profile`, and `filter date` modal.
-     - `nexus_pub/profile-dropdown.html`: Template for the user profile dropdown.
-     - `nexus_pub/search-form.html`: Template for the search form.
-     - `nexus_pub/staff.html`: Template for displaying staff information.
-     - `nexus_pub/article-grid.html`: Template for presenting articles in a grid layout.
-     - `nexus_pub/article.html`: Template for displaying the details of a single article, and where the comments are.
-     - `nexus_pub/index.html`: Template for the index page, showing all news articles.
-
-3. **nexus_pub/static/nexus_pub/**:
-   - Static files include:
-     - `nexus_pub/main.js`: JavaScript file for client-side functionalities and interactions, includes toggle comments, pagination of the comments using the see more button.
-     - `nexus_pub/styles.css`: CSS file for defining the application's visual styles and layout.
-
-#### View Functions
+### View Functions
 
 1. `index(request)`: Handles the rendering of the index page, displaying news articles sorted by date of publication. It includes a carousel showcasing the newest article headlines from each category.
 
@@ -166,13 +201,9 @@ The application's file structure is organized as follows:
 
 14. `register(request)`: Handles user registration and redirects them to the desired page after successful registration.
 
-### Nexus Games App
+## Nexus Games App
 
-#### Description
-
-The "Nexus Games" app is focused on offering a collection of games to users. Currently, the app includes one game, which is the "Wordle" game. However, I really want add more games in it in the future.
-
-#### Models
+### Models
 
 1. **GameResult Model**
    - Represents the game results of a user in the "Nexus Games" app.
@@ -181,39 +212,7 @@ The "Nexus Games" app is focused on offering a collection of games to users. Cur
       - `wordle_played`: Integer field to track the number of times the user has played the "Wordle" game, with a default value of 0.
       - `wordle_won`: Integer field to track the number of times the user has won the "Wordle" game, with a default value of 0.
 
-#### Features
-
-1. **Wordle User Ranking**:
-   - Provides a ranking system that tracks and displays the performance of users in the "Wordle" game.
-   - Users can view their rankings compared to other players, it shoows the Top 5 user based on the number of games won or points scored.
-   - It also involves a reload button to get the latest ranking among the users.
-
-2. **Statistics Menu and Points System**:
-   - Includes a statistics menu where users can access the amount they played the game and the number won, plus their winning percentage.
-   - The app implements a points system to reward users for their achievements and progress in the games.
-
-3. **Settings Menu**:
-   - Offers a settings menu that allows users to customize game-related preferences and configurations according to their preferences. (To be done)
-
-4. **Help Menu**:
-   - Provides game instructions, rules, and tips to assist users in understanding and playing the games effectively.
-
-5. **Surrender Button**:
-   - Users can choose to surrender or give up during a game.
-
-6. **Restart Button**:
-   - Allows users to restart or reset a game if they wish to begin again from the beginning or retry a challenge.
-
-7. **Message**:
-   - The user is promted of a message if they input word not on the list or shorter than the word length to be guessed.
-
-8. **Win or Lose Modal**:
-   - If the user lose or won, they are promted by a modal and have the button to restart or to view stats.
-
-9. **Confetti Effect**:
-   - When the user wins, an animation of confetti shows.
-
-#### Pages
+### Pages
 
 1. **Games Page**:
    - This page serves as the landing page for the Nexus Games app.
@@ -225,34 +224,7 @@ The "Nexus Games" app is focused on offering a collection of games to users. Cur
 
 The app's structure may include additional pages in the future as more games are introduced and integrated into the Nexus Games app. 
 
-#### File Structure
-
-The file structure of the "Nexus Games" app is organized as follows:
-
-1. **nexus_games/**
-   - `static/`: Directory for static files used in the app.
-   - `static/games/`: Subdirectory for game-specific static files.
-     - `game.js`: JavaScript file for game-related logic and functionalities. Functions includes: initBoard, abortGame, rightGuessString, and updateStats.
-     - `main.js`: Main JavaScript file for the games app, includes the event listeners.
-     - `ui.js`: JavaScript file for user interface interactions in the games. Functions includes: showFinalMessage, showLoseModal, showWinModal, showSection, showMessage, howFinalMessage, showWinModal, triggerConfetti, shadeKeyBoard, and animateCSS.
-     - `wordle.css`: CSS file for styling the Wordle game.
-     - `words.js`: JavaScript file containing word data for the games.
-   - `templates/`: Directory for HTML templates used in the app.
-   - `templates/games/`: Subdirectory for game-specific templates.
-     - `dashboard.html`: Template for the dashboard page displaying user rankings and statistics.
-     - `games.html`: Template for the games page listing the available games.
-     - `layout.html`: Base template defining the overall structure for other game-specific templates.
-     - `wordle.html`: Template for the Wordle game page.
-   - `templatetags/`: Directory for custom template tags (used to extend template functionalities).
-     - `custom_filters.py`: Python file containing custom template filter which is `ordinalize` for the user ranking.
-   - `admin.py`: Django admin site configurations for managing app models.
-   - `apps.py`: Django app configurations, such as the app name and settings.
-   - `models.py`: App-specific database models, including the `GameResult` model.
-   - `tests.py`: Unit tests for the app.
-   - `urls.py`: URL patterns and corresponding view functions for the app.
-   - `views.py`: Contains view functions handling HTTP requests and generating responses for the app.
-
-#### View Funtions
+### View Funtions
 
 1. **`games(request)`**:
    - This function handles the rendering of the games page, which serves as the landing page for the Nexus Games app.
@@ -277,32 +249,13 @@ The file structure of the "Nexus Games" app is organized as follows:
    - This function handles the user logout from the Nexus Games app.
    - After the user is logged out, they are redirected to the games page.
 
-#### Planned Expansion
--The Nexus Games app has future plans by adding more games to provide users with a diverse selection of options. As new games are developed and integrated into the app, additional models and views specific to each game will be implemented. This expansion aims to enhance the overall gaming experience for the users.
+## Nexus World News App
 
-### Nexus World News App
-
-#### Description
-
-Nexus World News is an app that utilizes the news API to fetch the latest and most popular news worldwide. Users can search for news based on categories and specific queries.
-
-#### Pages
+### Pages
 
 - **Index Page**: This is the main page of the Nexus World News app where the latest news articles and headlines are displayed. Users can also search for news by entering a search query or selecting a category.
 
-#### File Structure
-
-- **world_news/**
-  - `templates/`: Directory for HTML templates used in the app.
-  - `templates/world_news/`: Subdirectory for app-specific templates.
-    - `index.html`: Template for the Index page displaying the latest news articles and headlines.
-  - `admin.py`: Django admin site configurations for managing app models.
-  - `apps.py`: Django app configurations, such as the app name and settings.
-  - `tests.py`: Unit tests for the app.
-  - `urls.py`: URL patterns and corresponding view functions for the app.
-  - `views.py`: Contains view functions handling HTTP requests and generating responses for the app.
-
-#### View Functions
+### View Functions
 
 - **`index(request)`**:
   - This function handles the rendering of the Index page, which displays the latest news articles and headlines.
@@ -335,13 +288,7 @@ To run the project, follow the steps below:
    ```bash
    $ python manage.py runserver
    ```
+   
+## Acknowledgements
 
-## Comments
-
-A huge huge thanks to the whole team of CS50 for providing courses with such a high quality 👏👏👏
-
-## Stay in touch
-
-- LinkedIn: [John Mark Delima](https://www.linkedin.com/in/delimajohnmark)
-- Email: [delimajohnmark14@gmail.com](mailto:delimajohnmark14@gmail.com)
-- [Personal Portfolio](https://jnale-hub.github.io/John-Mark-Delima/)
+Huge thanks to the CS50 team for their excellent courses and support! 🙌🙌🙌
