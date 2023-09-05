@@ -1,5 +1,7 @@
 # CAPSTONE - Nexus-Publication
 #### Demo video:  <https://youtu.be/6O86-1Jj6g4>
+#### Live Site: <https://nexus-pub.vercel.app/>
+(This modified version is designed for free deployment. While the core functionalities remain intact, some features have been refined and adapted.) 
 
 Hi!
 
